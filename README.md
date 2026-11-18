@@ -60,4 +60,4 @@ ln -s /path/to/yushe-agent-kit/.agents/skills/backend-architecture ~/.dsh/skills
 
 ## License
 
-Private — personal/team scaffolding resources.
+MIT
