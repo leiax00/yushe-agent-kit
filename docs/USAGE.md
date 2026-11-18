@@ -2,7 +2,7 @@
 
 ## 安装位置与适用范围
 
-四个独立入口位于项目根目录 `.agents/skills/`，未修改全局配置、容器配置或现有业务文件。完整目录可复制到其他项目根目录；不要同时复制到 `.dsh/skills/` 造成同名重复。
+各 skill 入口位于项目根目录 `.agents/skills/`，未修改全局配置、容器配置或现有业务文件。完整目录可复制到其他项目根目录；不要同时复制到 `.dsh/skills/` 造成同名重复。
 
 当前 `/workspace/code/self/ai-work` 未检测到 Git 根，因此将 DSH 会话工作目录设为这个目录。若从其子目录启动，无 Git 根时 DSH 会把子目录自身当根，不能依赖向上搜索 `.dsh`。将来若加入上层 Git 仓库，需重新确认实际项目根。
 
@@ -14,7 +14,7 @@
 
 根目录直接下的 `<name>/SKILL.md` 和 `<name>.md` 可被识别；不递归发现任意深度的 SKILL.md。本体系使用目录形式，references 只是资源，不是额外 Skill。
 
-DSH 先提供名称/描述目录，模型通过 `skill({"name":"yx-backend-architecture"})` 加载正文；这是模型工具调用示意，不是终端命令。正文加载后根据相对路径按需读取 references，不会自动全部加载，也没有这里四个 Skill 之间的自动继承。
+DSH 先提供名称/描述目录，模型通过 `skill({"name":"yx-backend-architecture"})` 加载正文；这是模型工具调用示意，不是终端命令。正文加载后根据相对路径按需读取 references，不会自动全部加载，也没有 Skill 之间的自动继承。
 
 需要配置 skill registry、skill-filesystem 和 tool-skill。默认调用策略允许模型和用户调用，本套没有限制这些策略。UI 的斜杠调用支持需看所用客户端；以技能选择器实际显示为准，正文也可直接要求“请加载 yx-backend-architecture Skill”。
 
