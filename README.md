@@ -41,8 +41,9 @@ yushe-agent-kit/
 | `yx-frontend-architecture` | 前端业务模块、组件边界、状态、表单与异步交互（React/Vue + TS） |
 | `yx-api-design` | HTTP API 契约、资源命名、分页、错误、幂等与兼容性 |
 | `yx-database-design` | 关系型表、约束、索引、事务策略与可演进迁移（MySQL/PostgreSQL） |
+| `yx-docs` | 文档读取与写作：分形布局（单服务/monorepo/模块）、产品/技术/使用文档、决策记录（notes）、发版记录（docs/releases/） |
 
-四个 skill 互相按任务显式协作（改契约加载 yx-api-design、改模型加载 yx-database-design），不自动依赖。
+各 skill 互相按任务显式协作（改契约加载 yx-api-design、改模型加载 yx-database-design），不自动依赖。
 
 ## 安装
 
