@@ -9,6 +9,7 @@
 ## 目录与归属
 
 - `.agents/skills/<name>/SKILL.md` — skill 入口，纯路由：适用范围、按任务加载的参考表、跨 skill 协作关系；不堆正文。
+- `.agents/rules/*.md` — 协作规则（Claude Code rules 语义，可选 YAML frontmatter 门控：`alwaysApply`/`paths`）：由宿主机制注入、不依赖模型判断的强制约定；与 skills 的分工是"rules 机制注入、skills 模型按任务加载"。
 - `.agents/skills/<name>/references/` — 正文细则，按主题拆文件；每行路由条目只对应一个主题。
 - `.agents/skills/<name>/references/common/` — 跨语言原则（架构原则、可读性/简洁设计等）；语言专属细则放 `references/<lang>/`。
 - `docs/USAGE.md`、`AUTHORING.md` — 使用与编写规范，修订 skill 结构时同步更新。
@@ -27,7 +28,7 @@
 
 - 修改前先读目标 skill 的 SKILL.md 路由，确认改动落在正确的文件；发现规则重复时收敛到权威定义处，不在第二处补丁。
 - 结构调整（移动/改名文件）必须同步更新所有引用链接，并检查无外部仓库指向旧路径。
-- 每次改动用简洁英文 commit message 说明内容；不混合多个主题的重构。
+- 每次改动遵循 `.agents/rules/git-workflow.md` 的提交信息格式；不混合多个主题的重构。
 - skill 内容的取舍争议（如规则强度）优先依据既有文档的声明（团队共识/SHOULD 语义），其次询问用户。
 
 ## 安装映射（规划）
