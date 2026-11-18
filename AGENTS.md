@@ -11,7 +11,7 @@
 - `.agents/skills/<name>/SKILL.md` — skill 入口，纯路由：适用范围、按任务加载的参考表、跨 skill 协作关系；不堆正文。
 - `.agents/skills/<name>/references/` — 正文细则，按主题拆文件；每行路由条目只对应一个主题。
 - `.agents/skills/<name>/references/common/` — 跨语言原则（架构原则、可读性/简洁设计等）；语言专属细则放 `references/<lang>/`。
-- `.agents/docs/USAGE.md`、`AUTHORING.md` — 使用与编写规范，修订 skill 结构时同步更新。
+- `docs/USAGE.md`、`AUTHORING.md` — 使用与编写规范，修订 skill 结构时同步更新。
 
 ## 内容编写规则
 

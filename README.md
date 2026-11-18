@@ -56,7 +56,7 @@ ln -s /path/to/yushe-agent-kit/.agents/skills/backend-architecture ~/.dsh/skills
 - **条件加载**：skill 采用路由式 SKILL.md + 按任务加载的 references，反对一次性灌入全部规范。
 - **跨语言原则上浮**：原则性内容（KISS/YAGNI、代码整洁、设计模式选择）放 `references/common/`，语言专属细则放各自语言目录。
 
-详见 [AGENTS.md](AGENTS.md) 与 [.agents/docs/](.agents/docs/)。
+详见 [AGENTS.md](AGENTS.md) 与 [docs/](docs/)。
 
 ## License
 
