@@ -24,12 +24,13 @@ yushe-agent-kit/
 
 | Skill | 覆盖范围 |
 |---|---|
-| `backend-architecture` | 后端模块、服务编排与持久化边界；Java/Spring Boot/MyBatis-Plus 完整规范，TypeScript/Python/Go 基础指南 |
-| `frontend-architecture` | 前端业务模块、组件边界、状态、表单与异步交互（React/Vue + TS） |
-| `api-design` | HTTP API 契约、资源命名、分页、错误、幂等与兼容性 |
-| `database-design` | 关系型表、约束、索引、事务策略与可演进迁移（MySQL/PostgreSQL） |
+| `yx-yx-backend-architecture` | 后端模块、服务编排与持久化边界；Java/Spring Boot/MyBatis-Plus 完整规范，TypeScript/Python/Go 基础指南 |
+| `yx-yx-frontend-architecture` | 前端业务模块、组件边界、状态、表单与异步交互（React/Vue + TS） |
+| `yx-yx-api-design` | HTTP API 契约、资源命名、分页、错误、幂等与兼容性 |
+| `yx-yx-database-design` | 关系型表、约束、索引、事务策略与可演进迁移（MySQL/PostgreSQL） |
+| `yx-project-interaction` | 通用协作约定：vibe coding 交互原则、分支与提交规范、文档管理规范（`yx-` 前缀为新 skill 命名约定） |
 
-四个 skill 互相按任务显式协作（改契约加载 api-design、改模型加载 database-design），不自动依赖。
+四个 skill 互相按任务显式协作（改契约加载 yx-yx-api-design、改模型加载 yx-yx-database-design），不自动依赖。
 
 ## 安装
 
@@ -37,7 +38,7 @@ yushe-agent-kit/
 
 ```bash
 # 全局：软链到 DSH skills 目录（更新源即生效）
-ln -s /path/to/yushe-agent-kit/.agents/skills/backend-architecture ~/.dsh/skills/backend-architecture
+ln -s /path/to/yushe-agent-kit/.agents/skills/yx-yx-backend-architecture ~/.dsh/skills/yx-yx-backend-architecture
 
 # 或项目级：把 .agents/skills/ 内容放入项目根的 .agents/skills/
 ```

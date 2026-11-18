@@ -1,5 +1,5 @@
 ---
-name: backend-architecture
+name: yx-backend-architecture
 description: 设计、实现或评审后端模块、服务编排与持久化边界；提供 Java/Spring Boot/MyBatis-Plus 架构和编码规范，以及 TypeScript、Python、Go 的基础指南。
 ---
 
@@ -66,9 +66,9 @@ DTO 按实际变化选文档：内部 DTO 的归属或构建看数据对象；�
 
 ## 跨领域协作
 
-- 改变外部接口契约：显式加载 `api-design`。
-- 改变数据模型、索引或迁移：显式加载 `database-design`。
-- 前端页面/组件开发：交由 `frontend-architecture`。
+- 改变外部接口契约：显式加载 `yx-api-design`。
+- 改变数据模型、索引或迁移：显式加载 `yx-database-design`。
+- 前端页面/组件开发：交由 `yx-frontend-architecture`。
 
 这些是按任务调用的独立 Skill，不自动依赖或继承。不可用时说明缺失并依据已有项目契约工作。
 

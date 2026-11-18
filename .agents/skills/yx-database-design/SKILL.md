@@ -1,5 +1,5 @@
 ---
-name: database-design
+name: yx-database-design
 description: 设计或评审关系型数据库表、约束、索引、事务策略及可演进迁移；覆盖 MySQL/PostgreSQL 差异，ORM 封装交由后端架构 Skill。
 ---
 
@@ -11,6 +11,6 @@ description: 设计或评审关系型数据库表、约束、索引、事务策�
 2. 索引、慢查询、锁和并发读取 [索引与事务](references/index-and-transactions.md)。
 3. 任何结构或数据演进读取 [迁移与兼容](references/migrations.md)。
 4. 按实际产品读取 [MySQL/PostgreSQL 差异](references/engines.md) 的相关部分。
-5. 如果变化影响外部字段或查询语义，显式加载 `api-design`；ORM 映射/调用实现属于 `backend-architecture`，不得假定另一个 Skill 自动继承。
+5. 如果变化影响外部字段或查询语义，显式加载 `yx-api-design`；ORM 映射/调用实现属于 `yx-backend-architecture`，不得假定另一个 Skill 自动继承。
 
 交付 DDL/迁移建议、关键查询与索引对应关系、兼容顺序、风险及验证结果。生成迁移文件不等于执行迁移；是否执行按用户授权和目标环境判断，不能因加载本 Skill 自动操作生产库。

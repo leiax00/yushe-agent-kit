@@ -30,4 +30,4 @@
 
 ## Java 模块 API 与 HTTP API
 
-Java 的 api 包是同 JVM 公开模块契约，HTTP Controller 位于模块 internal/web；跨服务通信仍以 HTTP/RPC/消息协议为边界。外部状态码默认使用显式稳定字符串业务码，不暴露 Java ordinal/name；定义未知枚举值处理策略。具体 Java Port/Adapter 与 DTO 归属由 backend-architecture 负责。
+Java 的 api 包是同 JVM 公开模块契约，HTTP Controller 位于模块 internal/web；跨服务通信仍以 HTTP/RPC/消息协议为边界。外部状态码默认使用显式稳定字符串业务码，不暴露 Java ordinal/name；定义未知枚举值处理策略。具体 Java Port/Adapter 与 DTO 归属由 yx-backend-architecture 负责。

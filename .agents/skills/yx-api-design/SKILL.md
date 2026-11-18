@@ -1,5 +1,5 @@
 ---
-name: api-design
+name: yx-api-design
 description: 设计或评审 HTTP API 契约、资源命名、分页、错误、幂等、兼容性及前后端协作；用于新增接口或变更公共契约，不规定内部服务和数据库分层。
 ---
 

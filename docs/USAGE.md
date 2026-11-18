@@ -14,19 +14,19 @@
 
 根目录直接下的 `<name>/SKILL.md` 和 `<name>.md` 可被识别；不递归发现任意深度的 SKILL.md。本体系使用目录形式，references 只是资源，不是额外 Skill。
 
-DSH 先提供名称/描述目录，模型通过 `skill({"name":"backend-architecture"})` 加载正文；这是模型工具调用示意，不是终端命令。正文加载后根据相对路径按需读取 references，不会自动全部加载，也没有这里四个 Skill 之间的自动继承。
+DSH 先提供名称/描述目录，模型通过 `skill({"name":"yx-yx-backend-architecture"})` 加载正文；这是模型工具调用示意，不是终端命令。正文加载后根据相对路径按需读取 references，不会自动全部加载，也没有这里四个 Skill 之间的自动继承。
 
-需要配置 skill registry、skill-filesystem 和 tool-skill。默认调用策略允许模型和用户调用，本套没有限制这些策略。UI 的斜杠调用支持需看所用客户端；以技能选择器实际显示为准，正文也可直接要求“请加载 backend-architecture Skill”。
+需要配置 skill registry、skill-filesystem 和 tool-skill。默认调用策略允许模型和用户调用，本套没有限制这些策略。UI 的斜杠调用支持需看所用客户端；以技能选择器实际显示为准，正文也可直接要求“请加载 yx-yx-backend-architecture Skill”。
 
 ## 使用示例
 
 在该目录运行 `dsh` 或将 Web 会话工作目录设为该目录，再发送：
 
-- 请加载 backend-architecture，按现有 Spring Boot/MyBatis-Plus 结构实现订单取消，重点检查事务和并发。
-- 请加载 frontend-architecture，检查搜索页面的状态归属、旧响应覆盖和失败反馈。
-- 请加载 database-design，为订单业务编号设计租户内唯一约束和兼容迁移。
-- 请加载 api-design，设计订单列表接口，定义分页、错误和权限语义。
-- 请依次加载 api-design 与 backend-architecture，实现创建订单；如果需要改变表结构，再加载 database-design。
+- 请加载 yx-yx-backend-architecture，按现有 Spring Boot/MyBatis-Plus 结构实现订单取消，重点检查事务和并发。
+- 请加载 yx-yx-frontend-architecture，检查搜索页面的状态归属、旧响应覆盖和失败反馈。
+- 请加载 yx-yx-database-design，为订单业务编号设计租户内唯一约束和兼容迁移。
+- 请加载 yx-yx-api-design，设计订单列表接口，定义分页、错误和权限语义。
+- 请依次加载 yx-yx-api-design 与 yx-yx-backend-architecture，实现创建订单；如果需要改变表结构，再加载 yx-yx-database-design。
 
 让模型先报告加载的 Skill 和参考路径，可确认路由。若没出现，先检查会话 cwd、元数据、同名遮蔽和所用 profile 的提供器；新建会话可辅助排查缓存，但不能替代修复配置。
 
