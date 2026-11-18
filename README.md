@@ -8,18 +8,22 @@
 
 ```text
 yushe-agent-kit/
-├── README.md
-├── AGENTS.md            # 贡献/维护本仓库时 agent 应遵循的约定
+├── README.md / AGENTS.md   # 入口路由 / 维护约定
+├── docs/                   # 本仓库文档（yx-docs 单服务形态）
+│   ├── usage/              #   安装、DSH 发现机制
+│   ├── tech/               #   架构综述（资源模型、rules/skills 分工）
+│   ├── standards/          #   skill 编写规范
+│   ├── releases/           #   发版记录
+│   ├── glossary.md         #   术语表
+│   └── AUTHORING.md        #   贡献指南
 └── .agents/
-    ├── docs/
-    │   ├── USAGE.md     # skills 的使用与触发方式
-    │   └── AUTHORING.md # skill 的编写规范
-    ├── rules/           # 协作规则源（机制注入，见下节）
-    ├── skills/          # skill 源（单一事实来源）
+    ├── rules/              # 协作规则源（机制注入，见下节）
+    ├── notes/              # 决策记录（proposed/implemented/rejected）
+    ├── skills/             # skill 源（单一事实来源）
     └── (commands/ hooks/ … 随内容增加逐步建立)
 ```
 
-`.agents/skills/` 是多个 agent CLI 正在收敛的项目级 skills 约定路径，本仓库本身就是一个合法的 agent 工作区——克隆即可被识别，无需先安装。
+`.agents/skills/` 是多个 agent CLI 正在收敛的项目级 skills 约定路径，本仓库本身就是一个合法的 agent 工作区——克隆即可被识别，无需先安装。文档体系遵循本 kit 的 `yx-docs` skill 约定（何时写、放哪里、怎么读写详见该 skill）。
 
 ## Rules（协作规则）
 
@@ -47,22 +51,7 @@ yushe-agent-kit/
 
 ## 安装
 
-### DSH（DeepSeek Harness）
-
-```bash
-# 全局：软链到 DSH skills 目录（更新源即生效）
-ln -s /path/to/yushe-agent-kit/.agents/skills/yx-backend-architecture ~/.dsh/skills/yx-backend-architecture
-
-# 或项目级：把 .agents/skills/ 内容放入项目根的 .agents/skills/
-```
-
-### Claude Code / Codex / OpenCode 等
-
-安装器开发中（`npx yushe-agent-kit install <target>`，映射 `.agents/skills/` 到各工具的目标目录）。当前可手动复制：
-
-- Claude Code：`~/.claude/skills/<name>/`
-- OpenCode：项目 `.agents/skills/` 或其全局配置目录
-- 其余工具按各自 skills 目录约定放置
+详见 [docs/usage/install.md](docs/usage/install.md)（DSH / Claude Code / 其他 CLI），DSH 发现机制与排障见 [docs/usage/dsh-discovery.md](docs/usage/dsh-discovery.md)。
 
 ## 维护原则
 

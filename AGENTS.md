@@ -10,9 +10,11 @@
 
 - `.agents/skills/<name>/SKILL.md` — skill 入口，纯路由：适用范围、按任务加载的参考表、跨 skill 协作关系；不堆正文。
 - `.agents/rules/*.md` — 协作规则（Claude Code rules 语义，可选 YAML frontmatter 门控：`alwaysApply`/`paths`）：由宿主机制注入、不依赖模型判断的强制约定；与 skills 的分工是"rules 机制注入、skills 模型按任务加载"。
+- `docs/` — 本仓库自身文档（单服务形态，遵循 `yx-docs` 布局）：`usage/`、`tech/`、`standards/`、`releases/`、`glossary.md`、`AUTHORING.md`。
+- `.agents/notes/` — 决策记录（`{生命周期}/{class}/yyyy-mm-dd-主题.md`，规范见 `yx-docs` skill 的 notes 参考）。
 - `.agents/skills/<name>/references/` — 正文细则，按主题拆文件；每行路由条目只对应一个主题。
 - `.agents/skills/<name>/references/common/` — 跨语言原则（架构原则、可读性/简洁设计等）；语言专属细则放 `references/<lang>/`。
-- `docs/USAGE.md`、`AUTHORING.md` — 使用与编写规范，修订 skill 结构时同步更新。
+- `docs/USAGE.md`、`AUTHORING.md` — 使用与编写规范，修订 skill 结构时同步更新（USAGE 已拆为 `docs/usage/`，编写规范在 `docs/standards/skill-authoring.md`）。
 
 ## 内容编写规则
 
