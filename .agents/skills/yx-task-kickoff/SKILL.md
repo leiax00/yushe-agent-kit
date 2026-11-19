@@ -15,6 +15,7 @@ description: 开始一个开发任务时的启动流程：判断任务类型（�
 | 大任务 | 单一目标但需多步实现、跨模块或超过一两天量级，需要拆解 | [大任务](references/large-task.md) |
 | 小任务 | 单一主题、可一次会话内完成并验证 | [小任务](references/small-task.md) |
 | 修 bug | 修复既有缺陷，以定位根因为前提 | [修 bug](references/bugfix.md) |
+| 继续已有任务 | 接手/恢复一个进行中的任务分支，含同步 main 与漂移检查 | [继续任务](references/resume-task.md) |
 
 判断含糊时向用户确认类型，不赌方向。一个迭代中的单个任务按大/小任务或修 bug 处理，迭代参考仅负责周期层面的启动。
 
