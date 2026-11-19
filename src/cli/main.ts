@@ -19,24 +19,43 @@ function parseTargets(value: string, previous: string[]): string[] {
   return [...previous, value]
 }
 
+/** 位置参数是否是项目路径（. / .. / ~ / 绝对或相对路径），而非目标工具名。 */
+function isPathArg(value: string): boolean {
+  return value === '.' || value === '..' || value === '~'
+    || value.startsWith('./') || value.startsWith('../')
+    || value.startsWith('/') || value.startsWith('~/')
+}
+
+/** 把位置参数拆成目标工具与项目路径；--project 优先于位置路径。 */
+function splitArgs(
+  args: string[],
+  opts: { project?: string },
+): { names: string[]; project?: string } {
+  const pathArgs = args.filter(isPathArg)
+  const names = args.filter(a => !isPathArg(a))
+  if (pathArgs.length > 1) throw new InvalidArgumentError('最多给一个项目路径')
+  return { names, project: opts.project ?? pathArgs[0] }
+}
+
 program.command('install')
-  .description('安装 kit 资源到目标工具（可多个，或 --all）')
-  .argument('<target...>', '目标工具（dsh/claude/…）', parseTargets, [])
+  .description('安装 kit 到目标工具（默认用户级；末尾跟 . 或绝对/相对路径 = 项目级安装到该目录）')
+  .argument('<target...>', '目标工具（dsh/claude/…，可多个）或 --all；项目级安装再跟一个路径', parseTargets, [])
   .option('--all', '安装全部已核实目标')
   .option('--copy', '强制复制而非软链')
-  .option('--project <dir>', '项目级安装（rules 落到该项目；默认当前目录）')
+  .option('--project <dir>', '项目级安装目标目录（与位置路径参数等价，优先级更高）')
   .option('--profile <name>', 'DSH 插件安装目标 profile')
   .option('--no-plugin', '跳过 DSH 插件安装')
   .action(async (targetList: string[], opts: InstallOptions & { all?: boolean }) => {
-    const names = opts.all ? targetNames() : targetList
-    if (names.length === 0) throw new InvalidArgumentError(`缺少目标工具（可用：${targetNames().join(', ')}，或 --all）`)
+    const { names, project } = splitArgs(targetList, opts)
+    const finalNames = opts.all ? targetNames() : names
+    if (finalNames.length === 0) throw new InvalidArgumentError(`缺少目标工具（可用：${targetNames().join(', ')}，或 --all）`)
     let failed = false
-    for (const name of names) {
+    for (const name of finalNames) {
       const t = getTarget(name) // unknown target throws with the list
       const mod = await loadInstaller(name)
       console.log(`\n== ${t.label} ==`)
       try {
-        const lines = await mod.install(opts)
+        const lines = await mod.install({ ...opts, project })
         for (const line of lines) console.log(`  ${line}`)
       } catch (error) {
         failed = true
@@ -48,17 +67,19 @@ program.command('install')
 
 program.command('update')
   .description('刷新复制型安装（软链安装实时生效，无需 update）')
-  .argument('<target...>', '目标工具', parseTargets, [])
-  .option('--project <dir>', '项目级安装目标')
+  .argument('<target...>', '目标工具，可多个；项目级更新再跟一个路径', parseTargets, [])
+  .option('--project <dir>', '项目级更新目标目录（与位置路径参数等价，优先级更高）')
   .action(async (targetList: string[], opts: InstallOptions) => {
+    const { names, project } = splitArgs(targetList, opts)
+    if (names.length === 0) throw new InvalidArgumentError('缺少目标工具')
     let failed = false
-    for (const name of targetList) {
+    for (const name of names) {
       const t = getTarget(name)
       const mod = await loadInstaller(name)
       console.log(`\n== ${t.label} ==`)
       try {
         const fn = mod.update ?? mod.install
-        const lines = await fn(opts)
+        const lines = await fn({ ...opts, project })
         for (const line of lines) console.log(`  ${line}`)
       } catch (error) {
         failed = true

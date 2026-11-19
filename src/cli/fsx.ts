@@ -3,9 +3,9 @@
  */
 import {
   symlinkSync, unlinkSync, mkdirSync, cpSync, existsSync,
-  lstatSync, readlinkSync, statSync,
+  lstatSync, readlinkSync, statSync, rmSync,
 } from 'node:fs'
-import { dirname } from 'node:path'
+import { dirname, relative } from 'node:path'
 
 export type LinkState = 'absent' | 'symlink-ok' | 'symlink-broken' | 'dir' | 'file'
 export type PlaceAction = 'kept' | 'linked' | 'copied' | 'conflict'
@@ -42,10 +42,19 @@ export function symlinkTarget(target: string): string | undefined {
   }
 }
 
-/** Install `source` (a directory or file) at `target` as symlink, else copy. */
-export function place(source: string, target: string, { copy = false } = {}): PlaceAction {
+/**
+ * Install `source` (a directory or file) at `target` as symlink, else copy.
+ * `relative: true` creates the symlink with a path relative to the link's
+ * directory, keeping the project tree movable.
+ */
+export function place(
+  source: string,
+  target: string,
+  { copy = false, relative = false } = {},
+): PlaceAction {
+  const linkTo = relative ? relLinkTarget(source, target) : source
   const state = linkState(target)
-  if (state === 'symlink-ok' && symlinkTarget(target) === source) return 'kept'
+  if (state === 'symlink-ok' && symlinkTarget(target) === linkTo) return 'kept'
   if (state === 'dir' || state === 'file') return 'conflict' // user-owned install, refuse to clobber
   if (state.startsWith('symlink')) unlinkSync(target)
   mkdirSync(dirname(target), { recursive: true })
@@ -54,7 +63,7 @@ export function place(source: string, target: string, { copy = false } = {}): Pl
     return 'copied'
   }
   try {
-    symlinkSync(source, target)
+    symlinkSync(linkTo, target)
     return 'linked'
   } catch {
     cpSync(source, target, { recursive: true })
@@ -62,11 +71,16 @@ export function place(source: string, target: string, { copy = false } = {}): Pl
   }
 }
 
+/** Symlink target for `source` relative to `target`'s directory. */
+export function relLinkTarget(source: string, target: string): string {
+  return relative(dirname(target), source)
+}
+
 /** Refresh a previously copied install (or create one). */
 export function refreshCopy(source: string, target: string): 'symlink' | 'copied' {
   const state = linkState(target)
   if (state === 'symlink-ok') return 'symlink'
-  if (state !== 'absent') unlinkSync(target)
+  if (state !== 'absent') rmSync(target, { recursive: true, force: true })
   mkdirSync(dirname(target), { recursive: true })
   cpSync(source, target, { recursive: true })
   return 'copied'

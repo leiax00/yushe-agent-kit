@@ -36,4 +36,4 @@
 
 ## 安装映射
 
-唯一权威是 [src/cli/targets/registry.js](src/cli/targets/registry.js)（CLI 安装器读取它）；本节与其保持一致但不重复细节。安装模型：kit **按整体安装**到目标项目 `.agents/`（skills、rules 全套），各工具目录由映射产生（如 Claude Code 软链 `.claude/skills`、`.claude/rules` 指向 `.agents/` 对应目录；DSH 直接读项目 `.agents/`）。skill 间的相对路径引用（如 `../yx-docs/...`）依赖全套 skill 在位，MUST NOT 只安装部分 skill。当前已核实并支持：DSH（skills → 项目 `.agents/skills/`；rules → 项目 `.agents/rules/` 经插件注入；插件 → `dsh plugin add link:`）、Claude Code（skills → 项目 `.claude/skills/` 软链；rules → 项目 `.claude/rules/` 软链）。新增目标工具时先核实其实际目录约定再在 registry 登记，不凭印象写路径。
+唯一权威是 [src/cli/targets/registry.js](src/cli/targets/registry.js)（CLI 安装器读取它）；本节与其保持一致但不重复细节。两种模式：**用户级（默认）**——dsh skills 软链到 DSH_HOME/skills，claude skills 软链到 `~/.claude/skills/`、rules 复制到当前项目 `.claude/rules/`，装一次全局生效；**项目级**——`install <target> <path>`（`.` 或绝对/相对路径）时 kit **按整体**落位到目标项目 `.agents/`（skills、rules 全套），各工具目录由映射产生（Claude Code 软链 `.claude/skills`、`.claude/rules` 指向 `.agents/` 对应内容；DSH 直接读项目 `.agents/`）。项目级下 skill 间的相对路径引用（如 `../yx-docs/...`）依赖全套 skill 在位，MUST NOT 只安装部分 skill。新增目标工具时先核实其实际目录约定再在 registry 登记，不凭印象写路径。
