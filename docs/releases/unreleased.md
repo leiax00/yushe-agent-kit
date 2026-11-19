@@ -11,6 +11,7 @@
 - kit 整体插件：一个 npm 包通过两个子路径组件提供 DSH 插件，skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入；Plugin Manager 分别显示为 **Yushe Agent Kit Skills** 与 **Yushe Agent Kit Rules** 并独立开关
 
 ## Changed
+- git-workflow 规则新增合入方式约定：单笔或少量简单提交快进合并（`--ff-only`），多提交且各提交有意义时保留 merge 节点；wrapup 收尾参考同步
 - `docs-management` 规则瘦身为底线并指向 `yx-docs` skill
 - 文档结构重组为 usage/tech/standards/releases + glossary + AUTHORING（原 USAGE.md/AUTHORING.md 拆分迁移）
 - git 分支模型改为"任务分支沙箱"：门禁后移至合入前、允许 checkpoint 提交、同机并行用 worktree 隔离、提交授权分两级

@@ -15,7 +15,8 @@ alwaysApply: true
 3. 分支生命周期尽量短（SHOULD，一两天内量级）；无法及时合入的长命分支 SHOULD 在每天或每次继续任务时同步 `main`（未推送的本地分支用 rebase，已共享分支用 merge），不让冲突积累；开启 `git rerere` 复用重复的冲突解决。
 4. 同一台机器上的并行任务用 `git worktree` 隔离（一任务一分支一 worktree）；worktree 是一次性资源，合入后删除并 `git worktree prune`。
 5. 直接在 `main` 上提交仅限微小改动（typo、文档修正）；其余情况 SHOULD 走分支。
-6. 分支合并后删除；不合入的探索分支注明原因后删除。
+6. 合入方式：分支只有一笔提交，或少量简单提交无需保留分支边界时 SHOULD 快进合并（`git merge --ff-only`）；多提交且各提交独立有意义时用 `--no-ff` 保留 merge 节点。历史需整理时先 squash/fixup 再合入（授权见安全边界）。
+7. 分支合并后删除；不合入的探索分支注明原因后删除。
 
 ## 提交信息格式
 

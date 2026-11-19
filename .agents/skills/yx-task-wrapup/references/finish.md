@@ -11,7 +11,7 @@
    - 移动或改名文件的引用链接已同步（docs-management 底线）；
    - 开了 proposed note 的随合入迁入 `implemented/`，涉及模块的 `history.md` 追加演进（细则与路径见 yx-docs notes 参考）；
    - 对外可感知的变化写入 `releases/unreleased.md`（写法见 yx-docs 发版参考）。
-4. **合入**：确认 main 上构建 / 测试通过（无法验证时说明原因）；合入方式按项目约定（kit 仓库默认 `--no-ff` 保留主题提交历史）；合入后按[清理分支与 worktree](cleanup.md) 执行。
+4. **合入**：确认 main 上构建 / 测试通过（无法验证时说明原因）；合入方式按项目 git 工作流规则（kit 仓库：单笔或少量简单提交快进 `--ff-only`，多提交且各提交有意义时 `--no-ff` 保留 merge 节点）；合入后按[清理分支与 worktree](cleanup.md) 执行。
 5. **汇报**：提交与合入 hash、验证状态（含未验证项）、main 领先远端的笔数；推送 MUST 等用户显式要求，不链式执行。
 
 ## 边界
