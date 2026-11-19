@@ -12,6 +12,7 @@
 
 ## Changed
 - git-workflow 规则新增合入方式约定：单笔或少量简单提交快进合并（`--ff-only`），多提交且各提交有意义时保留 merge 节点；wrapup 收尾参考同步
+- `yx-api-design` 明确 API schema 以 OpenAPI 源文件为载体：源文件唯一、design-first 默认、布局引用 yx-docs、错误结构入可复用 schema
 - `docs-management` 规则瘦身为底线并指向 `yx-docs` skill
 - 文档结构重组为 usage/tech/standards/releases + glossary + AUTHORING（原 USAGE.md/AUTHORING.md 拆分迁移）
 - git 分支模型改为"任务分支沙箱"：门禁后移至合入前、允许 checkpoint 提交、同机并行用 worktree 隔离、提交授权分两级

@@ -36,6 +36,14 @@
 
 服务端权限校验为权威依据；是否对不存在和无权限统一返回 404 由资源泄露策略决定。
 
+## 契约载体（OpenAPI）
+
+- HTTP API 的 schema SHOULD 以 OpenAPI 源文件记录（YAML 优先），不依赖口头约定或散落的接口文档。
+- 源文件唯一：改契约 MUST 同步更新 OpenAPI 源；生成与手写双轨并存时明确哪边是权威，只保持一个权威方向。
+- 无既有载体时默认手写源文件（design-first，契约评审先于实现）；采用注解生成时，生成产物是提交还是 CI 产出由项目定，同样只有一个权威。
+- 文件位置与跨服务发现遵循 yx-docs 的 API 契约布局（单服务 `docs/apis/`，monorepo `docs/services/<服务>/apis/`，文件名即服务名）；spec 的破坏性变更 MUST 同步记入该服务 `releases/unreleased.md`。
+- 错误结构登记为可复用 schema（`components/responses` 或等价机制，含 `code`/`args`/`requestId`）；code 清单以错误目录为权威，OpenAPI 不重复枚举（或由目录生成），避免两处漂移。
+
 ## Java 模块 API 与 HTTP API
 
 Java 的 api 包是同 JVM 公开模块契约，HTTP Controller 位于模块 internal/web；跨服务通信仍以 HTTP/RPC/消息协议为边界。外部状态码默认使用显式稳定字符串业务码，不暴露 Java ordinal/name；定义未知枚举值处理策略。具体 Java Port/Adapter 与 DTO 归属由 yx-backend-architecture 负责。
