@@ -7,6 +7,7 @@
  */
 import { join, relative } from 'node:path'
 import { homedir } from 'node:os'
+import { existsSync } from 'node:fs'
 import { listRules, listSkills, paths } from '../kit.js'
 import { place, refreshCopy, linkState } from '../fsx.js'
 import { projectRoot, stageKit } from './stage.js'
@@ -81,14 +82,17 @@ export const doctor: Installer['doctor'] = () => {
     else if (state === 'dir') lines.push(`WARN ~/.claude/skills/${skill} 是实体目录，可能是过时副本`)
   }
 
-  // 项目级安装现场（cwd 下有 kit 落位才算）
-  const staged = listSkills().filter(s => linkState(join(cwd, '.agents', 'skills', s)) !== 'absent')
-  for (const skill of staged) {
-    const target = join(cwd, '.claude', 'skills', skill)
-    const state = linkState(target)
-    if (state === 'absent') lines.push(`WARN .claude/skills/${skill} 未链接（项目级安装未完成？）`)
-    else if (state === 'symlink-broken') lines.push(`FAIL .claude/skills/${skill} 软链失效`)
-    else if (state === 'dir') lines.push(`WARN .claude/skills/${skill} 是实体目录，可能是过时副本`)
+  // 项目级安装现场（cwd 下有 kit 落位且使用了 .claude 时才检查）
+  const claudeRoot = join(cwd, '.claude')
+  if (existsSync(claudeRoot)) {
+    const staged = listSkills().filter(s => linkState(join(cwd, '.agents', 'skills', s)) !== 'absent')
+    for (const skill of staged) {
+      const target = join(claudeRoot, 'skills', skill)
+      const state = linkState(target)
+      if (state === 'absent') lines.push(`WARN .claude/skills/${skill} 未链接（项目级安装未完成？）`)
+      else if (state === 'symlink-broken') lines.push(`FAIL .claude/skills/${skill} 软链失效`)
+      else if (state === 'dir') lines.push(`WARN .claude/skills/${skill} 是实体目录，可能是过时副本`)
+    }
   }
   return lines
 }

@@ -18,7 +18,7 @@ export const targets: Record<string, TargetEntry> = {
     label: 'DSH (DeepSeek Harness)',
     installer: './dsh.js',
     verified: true,
-    notes: '默认用户级：skills 软链到 DSH_HOME/skills；项目级（带路径）：落位项目 .agents/；整体插件（可选）：dsh plugin add 本包即装齐 skills+rules，CLI 检测到时跳过用户级防双源',
+    notes: '单一通道：确保 kit 整体插件已装（skills+rules 两组件行独立开关）；项目级（带路径）额外落位 .agents/ 以覆盖插件',
   },
   claude: {
     label: 'Claude Code',

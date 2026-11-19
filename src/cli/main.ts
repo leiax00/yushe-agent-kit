@@ -4,7 +4,7 @@
 import { Command, InvalidArgumentError } from 'commander'
 import { join } from 'node:path'
 import { existsSync } from 'node:fs'
-import { listSkills, listRules, listDshPlugins, skillEntryName, version, paths } from './kit.js'
+import { listSkills, listRules, skillEntryName, version, paths } from './kit.js'
 import { targetNames, targets, getTarget, loadInstaller } from './targets/registry.js'
 import type { InstallOptions } from './targets/types.js'
 
@@ -101,8 +101,6 @@ program.command('list')
     }
     console.log(`\nrules (${listRules().length})`)
     for (const r of listRules()) console.log(`  ${r}`)
-    console.log(`\ndsh plugins (${listDshPlugins().length})`)
-    for (const p of listDshPlugins()) console.log(`  ${p}`)
     console.log('\n目标工具映射：')
     for (const name of targetNames()) {
       const t = targets[name]

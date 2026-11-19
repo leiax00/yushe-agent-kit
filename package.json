@@ -15,7 +15,6 @@
     "cordis.patch.yml",
     ".agents/skills/",
     ".agents/rules/",
-    ".agents/dsh/",
     "README.md"
   ],
   "scripts": {
