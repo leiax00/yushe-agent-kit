@@ -7,7 +7,7 @@
 - skill 命名统一 `yx-` 前缀
 - `yx-task-kickoff` skill：任务启动流程（迭代/大任务/小任务/修 bug/继续任务 + 开分支与 worktree 操作流程）
 - `yx-task-wrapup` skill：任务收尾流程（正常完成/中止不合入/迭代收尾 + 分支与 worktree 清理，含文档同步检查清单）
-- `yx-release` skill：发版流程（semver 版本决策、发版记录迁移、tag 与渠道发布）
+- `yx-release` skill：发版流程（semver 版本决策、发版记录迁移、tag 与渠道发布；版本落位按技术栈路由——npm/Maven/Python/Go 各有参考）
 - kit 整体插件：一个 npm 包通过两个子路径组件提供 DSH 插件，skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入；Plugin Manager 分别显示为 **Yushe Agent Kit Skills** 与 **Yushe Agent Kit Rules** 并独立开关
 
 ## Changed
