@@ -1,0 +1,38 @@
+{
+  "name": "yushe-agent-kit",
+  "version": "0.1.0",
+  "description": "One-command install of skills, rules & plugins for AI coding agents (DSH, Claude Code, ...)",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "yushe-agent-kit": "dist/bin/yak.js",
+    "yak": "dist/bin/yak.js"
+  },
+  "files": [
+    "dist/",
+    ".agents/skills/",
+    ".agents/rules/",
+    ".agents/dsh/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/bin/yak.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@lax-jxgm.leiax00.net:2222/leiax00/yushe-agent-kit.git"
+  }
+}

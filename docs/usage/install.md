@@ -1,28 +1,35 @@
 # 安装
 
-> 受众：使用本 kit 的开发者 ｜ 范围：把 skills/rules 安装到各 agent CLI ｜ 最后核实：2026-11-18
+> 受众：使用本 kit 的开发者 ｜ 范围：把 skills/rules/插件安装到各 agent CLI ｜ 最后核实：2026-11-19
 
-## DSH（DeepSeek Harness）
+## 推荐：yak CLI
 
-本仓库本身就是一个合法的 agent 工作区——把 DSH 会话工作目录设为仓库根即可识别 `.agents/skills/`，无需安装。
-
-全局安装（软链，更新源即生效）：
+发布后（未发布前用仓库直跑，见下节）：
 
 ```bash
-ln -s /path/to/yushe-agent-kit/.agents/skills/yx-backend-architecture ~/.dsh/skills/yx-backend-architecture
+npx yushe-agent-kit install dsh        # 安装到 DSH
+npx yushe-agent-kit install claude     # 安装到 Claude Code
+npx yushe-agent-kit install --all      # 所有已核实目标
+npx yushe-agent-kit doctor             # 诊断：遮蔽、双源、失效软链、命名不一致
+npx yushe-agent-kit list               # 资源与映射清单
 ```
 
-协作规则（`.agents/rules/`）由 DSH 的 `yushe-user-rules` 插件注入（项目根 rules 目录优先），无需手动操作。
+安装策略：skills 软链优先（更新源即生效），`--copy` 强制复制；实体目录（用户自有安装）判 conflict 不覆盖；rules 对 Claude Code 复制到项目 `.claude/rules/`（`update <target>` 刷新）。
 
-## Claude Code
+## 开发期（仓库直跑）
 
-- skills：复制 `.agents/skills/<name>/` 到 `~/.claude/skills/<name>/`
-- rules：Claude Code 原生支持 `.agents/rules/` 目录（rules 语义），项目级放置即可
+```bash
+npm install
+npm run dev -- install dsh --no-plugin    # tsx 直跑源码
+npm run build && node dist/bin/yak.js …   # 构建产物
+```
 
-## OpenCode / Codex 等
+DSH 插件安装是 `dsh plugin add link:<kit>/.agents/dsh/plugins/yushe-user-rules` 的 passthrough。
 
-安装器开发中（`npx yushe-agent-kit install <target>`，映射 `.agents/` 到各工具目录）。当前可手动复制到各工具的 skills 目录约定位置。
+## 未支持的目标
 
-## 注意
+opencode/codex/gemini 的目录约定未核实，CLI 会拒绝安装并说明原因；核实后在 `src/cli/targets/registry.js` 登记映射（该文件是映射的唯一权威）。
 
-- 不要同时把 skills 复制到同一项目的 `.dsh/skills/` 与 `.agents/skills/`——`.dsh` 优先级更高，会造成同名双源。
+## DSH 发现机制与排障
+
+见 [dsh-discovery.md](dsh-discovery.md)。不要同时把 skills 复制到同一项目的 `.dsh/skills/` 与 `.agents/skills/`——`.dsh` 优先级更高，会造成同名双源。

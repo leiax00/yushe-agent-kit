@@ -11,6 +11,7 @@
 | 载体 | 性质 | 加载方式 | 适合的内容 |
 |---|---|---|---|
 | `.agents/rules/*.md` | 强制约定 | **机制注入**（DSH 经 yushe-user-rules 插件；Claude Code 原生支持），可选 frontmatter 门控（`alwaysApply`/`paths`） | 每会话必守的底线、按文件类型触发的强制规则 |
+| `.agents/dsh/plugins/<name>/` | DSH 插件 | `dsh plugin add link:<kit 内路径>` 安装，软链回源 | 宿主机制本身的实现（如 yushe-user-rules，rules 注入的提供者） |
 | `.agents/skills/<name>/` | 领域知识 | **模型按任务加载**（SKILL.md 路由 + references 条件加载） | 触发条件在用户消息中可见的任务型知识 |
 
 判定标准：模型能否可靠判断"何时需要"——不能（新会话/压缩后）走机制注入，能（git 操作、文档读写、架构设计）走 skill。
@@ -43,8 +44,17 @@ docs/
 └── AUTHORING.md    # 贡献指南
 ```
 
-暂不预建：product/（工具库无产品定义需求）、modules/（skills 自含文档即模块文档）、references/、iterations/、apis/——有实料再建。
+暂不预建：product/（工具库无产品定义需求）、modules/（skills 自含文档即模块文档；CLI 的模块文档待其稳定后再建）、references/、iterations/、apis/——有实料再建。
 
-## 安装映射（规划）
+## yak CLI（安装器）
 
-安装器实现后，各工具的目标路径映射在 [AGENTS.md](../AGENTS.md) 登记并与 README 保持一致。
+单包发布：根 `package.json`（bin: `yak` / `yushe-agent-kit`，TypeScript 源码 → `dist/` 产物分发，运行时依赖 commander），`.agents/` 载荷随包分发，`npx yushe-agent-kit install <target>` 安装到各工具。**依赖边界**：CLI 可用外部依赖；`.agents/dsh/plugins/*` 保持零依赖（link: 安装不装依赖，插件硬约束）。
+
+- `src/cli/targets/registry.js` 是"资源 → 目标路径"映射的**唯一权威**；未核实目录约定的目标拒绝安装。
+- 软链优先、复制兜底；实体目录判 conflict 不覆盖（保护用户自有安装）。
+- `doctor` 诊断实际踩过的坑：项目 `.dsh/skills` 遮蔽、双源副本、失效软链、SKILL.md 命名不一致。
+- 设计取舍详见 [.agents/notes/implemented/feature/2026-11-19-yak-cli.md](../../.agents/notes/implemented/feature/2026-11-19-yak-cli.md)。
+
+## 安装映射
+
+映射唯一权威是 [src/cli/targets/registry.js](../../src/cli/targets/registry.js)；已支持 DSH 与 Claude Code，其余目标核实目录约定后登记。
