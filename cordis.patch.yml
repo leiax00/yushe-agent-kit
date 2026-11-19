@@ -1,5 +1,9 @@
-# Whole-kit bundle layer: one plugin row serving package skills (provider)
-# and rules (project rules + package defaults) for every profile that adds it.
+# Whole-kit bundle layer: one package, two independently toggleable rows.
+# The skills row registers the SkillProvider only; the rules row registers
+# the two-layer rules injection only. Disable either row in Plugin Manager
+# without affecting the other.
 - insert:
-    - id: yushe-agent-kit
-      name: '@leiax00/yushe-agent-kit'
+    - id: yushe-agent-kit-skills
+      name: '@leiax00/yushe-agent-kit/skills'
+    - id: yushe-agent-kit-rules
+      name: '@leiax00/yushe-agent-kit/rules'

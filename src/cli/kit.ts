@@ -12,7 +12,6 @@ export const kitRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 export const paths = {
   skills: join(kitRoot, '.agents', 'skills'),
   rules: join(kitRoot, '.agents', 'rules'),
-  dshPlugins: join(kitRoot, '.agents', 'dsh', 'plugins'),
 } as const
 
 export function listSkills(): string[] {
@@ -22,10 +21,6 @@ export function listSkills(): string[] {
 export function listRules(): string[] {
   if (!existsSync(paths.rules)) return []
   return readdirSync(paths.rules).filter(f => f.endsWith('.md')).sort()
-}
-
-export function listDshPlugins(): string[] {
-  return subdirs(paths.dshPlugins)
 }
 
 export function version(): string {

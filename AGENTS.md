@@ -10,7 +10,7 @@
 
 - `.agents/skills/<name>/SKILL.md` — skill 入口，纯路由：适用范围、按任务加载的参考表、跨 skill 协作关系；不堆正文。
 - `.agents/rules/*.md` — 协作规则（Claude Code rules 语义，可选 YAML frontmatter 门控：`alwaysApply`/`paths`）：由宿主机制注入、不依赖模型判断的强制约定；与 skills 的分工是"rules 机制注入、skills 模型按任务加载"。
-- `.agents/<target>/` — 各 CLI 工具的专属资源（`dsh/`、`claude/`、`opencode/` …，随内容建立）：凡依赖特定工具机制的进对应 target 目录（如 `.agents/dsh/plugins/yushe-user-rules`，rules 注入机制的提供者）；工具无关的留在顶层 `rules/`、`skills/`。安装器按 target 目录映射到各工具。
+- `.agents/<target>/` — 各 CLI 工具的专属资源（`dsh/`、`claude/`、`opencode/` …，随内容建立）：凡依赖特定工具机制的进对应 target 目录；工具无关的留在顶层 `rules/`、`skills/`。安装器按 target 目录映射到各工具。当前为空——DSH 侧能力（skills provider、rules 注入）已并入包根插件（`src/plugin/`），不再依赖 target 目录。
 - `docs/` — 本仓库自身文档（单服务形态，遵循 `yx-docs` 布局）：`usage/`、`tech/`、`standards/`、`releases/`、`glossary.md`、`AUTHORING.md`。
 - `.agents/notes/` — 决策记录（`{生命周期}/{class}/yyyy-mm-dd-主题.md`，规范见 `yx-docs` skill 的 notes 参考）。
 - `.agents/skills/<name>/references/` — 正文细则，按主题拆文件；每行路由条目只对应一个主题。
@@ -36,4 +36,4 @@
 
 ## 安装映射
 
-唯一权威是 [src/cli/targets/registry.js](src/cli/targets/registry.js)（CLI 安装器读取它）；本节与其保持一致但不重复细节。两种模式：**用户级（默认）**——dsh skills 软链到 DSH_HOME/skills，claude skills 软链到 `~/.claude/skills/`、rules 复制到当前项目 `.claude/rules/`，装一次全局生效；**项目级**——`install <target> <path>`（`.` 或绝对/相对路径）时 kit **按整体**落位到目标项目 `.agents/`（skills、rules 全套），各工具目录由映射产生（Claude Code 软链 `.claude/skills`、`.claude/rules` 指向 `.agents/` 对应内容；DSH 直接读项目 `.agents/`）。项目级下 skill 间的相对路径引用（如 `../yx-docs/...`）依赖全套 skill 在位，MUST NOT 只安装部分 skill。新增目标工具时先核实其实际目录约定再在 registry 登记，不凭印象写路径。
+唯一权威是 [src/cli/targets/registry.ts](src/cli/targets/registry.ts)（CLI 安装器读取它）；本节与其保持一致但不重复细节。**DSH 单一内容通道 = kit 整体插件**（包根插件，skills 与 rules 两个独立开关的组件行）：用户级 `install dsh` 仅确保插件已装（`dsh plugin add`）；项目级 `install dsh <path>` 额外把 kit 落位到目标项目 `.agents/`，项目内容以更高优先级覆盖插件（skills rank 200 > 600，rules 同名文件项目侧胜出）。**Claude Code 走 CLI 映射**：用户级 skills 软链 `~/.claude/skills/`、rules 复制当前项目 `.claude/rules/`；项目级（带路径）kit 落位 `.agents/` 后 `.claude/{skills,rules}` 相对软链指向它。项目级下 skill 间的相对路径引用（如 `../yx-docs/...`）依赖全套 skill 在位，MUST NOT 只安装部分 skill。新增目标工具时先核实其实际目录约定再在 registry 登记，不凭印象写路径。

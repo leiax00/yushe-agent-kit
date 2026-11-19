@@ -5,6 +5,14 @@
   "type": "module",
   "license": "MIT",
   "main": "./dist/plugin/index.js",
+  "exports": {
+    ".": "./dist/plugin/index.js",
+    "./skills": "./dist/plugin/skills-entry.js",
+    "./skills/locale/*.json": "./skills/locale/*.json",
+    "./rules": "./dist/plugin/rules-entry.js",
+    "./rules/locale/*.json": "./rules/locale/*.json",
+    "./locale/*.json": "./locale/*.json"
+  },
   "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
   "bin": {
     "yushe-agent-kit": "dist/bin/yak.js",
@@ -15,8 +23,10 @@
     "cordis.patch.yml",
     ".agents/skills/",
     ".agents/rules/",
-    ".agents/dsh/",
-    "README.md"
+    "README.md",
+    "locale/",
+    "skills/locale/",
+    "rules/locale/"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",

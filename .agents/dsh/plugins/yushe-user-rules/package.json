@@ -1,9 +1,0 @@
-{
-  "name": "yushe-user-rules",
-  "version": "0.3.0",
-  "description": "Inject project rules (.agents > .claude > .opencode > .cursor, first present wins) into dsh model context, with paths/globs frontmatter gating",
-  "type": "module",
-  "main": "index.js",
-  "files": ["index.js", "cordis.patch.yml", "README.md"],
-  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
-}
