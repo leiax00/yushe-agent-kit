@@ -1,6 +1,21 @@
 # 版本决策
 
-版本号依据 `releases/unreleased.md` 的**实际变化清单**判定，不是"感觉改了很多"；semver 语义为基线，0.x 阶段有专门约定。
+版本号依据实际变化清单判定，不是"感觉改了很多"；多包仓库先判定版本策略，再按 semver 定级，0.x 阶段有专门约定。
+
+## 版本策略判定（多包仓库先于 semver）
+
+单包仓库跳过本节。多包 monorepo 先确认版本策略，依据按序：
+
+1. 仓库既有发布规范（最优先，高于本 skill）。
+2. 工具暗示：`.changeset/config.json` 的 `fixed`/`linked` 分组；lerna `--independent`；Maven 单 reactor（默认统一）；Go 多模块（天然独立）。
+3. 无任何暗示时与用户确认，不擅自假定。
+
+两种策略下的判定规则：
+
+- **统一版本（lockstep）**：semver 级别取全部包变化的**并集**——任一包有 breaking，仓库整体升 major；一个版本号、一次发版。
+- **独立版本（independent）**：按包分别判定 semver 与版本号；一次"发版"是发布一批包，各自定级、各自记录。
+
+社区实践参考：发布库的 monorepo 主流是独立版本（changesets 默认，可配 fixed 分组混用），lockstep 代表是 Angular / Babel / Vue 生态；应用 / 服务型 monorepo 主流统一版本（整体部署一个 tag 追踪），微服务独立部署的单仓按服务打版本。
 
 ## 判定规则
 

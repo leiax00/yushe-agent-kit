@@ -5,7 +5,7 @@ description: 仓库发版流程：确定 semver 版本号、按技术栈落位�
 
 # 发版
 
-发版是**仓库级动作**：在 main 上聚合 `releases/unreleased.md` 的变化，确定版本并发布；它发生在任务合入之后，不依附单个任务分支。
+发版是**仓库级动作**：在 main 上聚合 `releases/unreleased.md` 的变化，确定版本并发布；它发生在任务合入之后，不依附单个任务分支。本 skill 默认面向单版本线仓库（一份 unreleased、一个版本号）；多版本线 monorepo 先经[版本决策](references/version.md)的策略判定确定版本策略与本次要发的线。
 
 ## 流程路由
 

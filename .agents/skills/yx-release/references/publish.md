@@ -15,4 +15,7 @@
 ## 边界
 
 - 发版不引入分支：全部动作发生在 main；发版中途失败（如 publish 网络错误）时记录做到哪一步，重试从断点继续，不重复已成功的步骤。
-- 多包仓库：各包独立执行 2–6，共享同一发版日期；包间依赖版本引用在各自版本载体中同步。
+- 多包仓库：先按[版本决策](version.md)的策略判定确定单线 / 多线，再执行本清单——
+  - 统一版本：一份 unreleased 与一个版本号，清单走一遍即可；tag 用仓库号（mono-tag）。
+  - 独立版本：变化记录按线拆分（`releases/<线名>/unreleased.md` 或 changesets 变更集，布局权威在 yx-docs）；本次要发的线各走一遍清单，发版日期各线独立；tag 用 per-package / per-service 前缀（`pkg-a/v1.2.3`）。
+  - 依赖传播：被依赖包升级后，依赖方版本引用的跟随方式（workspace 协议 / Maven BOM pin / go.mod replace）按技术栈参考与仓库既有约定处理；依赖 bump 是否构成依赖方的一次发布由仓库策略定，changesets 仓库跟随其输出。
