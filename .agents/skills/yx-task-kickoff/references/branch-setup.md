@@ -48,4 +48,4 @@ git worktree add ../<任务名> -b <分支名>
 
 ## 收尾汇报
 
-报告分支名、基点短 hash、是否 worktree 及路径、未提交改动去向（如有）；提醒完成后走对应类型的收尾/合入流程。
+报告分支名、基点短 hash、是否 worktree 及路径、未提交改动去向（如有）；提醒任务结束时走 yx-task-wrapup skill 的对应收尾场景。

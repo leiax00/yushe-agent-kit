@@ -47,6 +47,9 @@ yushe-agent-kit/
 | `yx-api-design` | HTTP API 契约、资源命名、分页、错误、幂等与兼容性 |
 | `yx-database-design` | 关系型表、约束、索引、事务策略与可演进迁移（MySQL/PostgreSQL） |
 | `yx-docs` | 文档读取与写作：分形布局（单服务/monorepo/模块）、产品/技术/使用文档、决策记录（notes）、发版记录（docs/releases/） |
+| `yx-task-kickoff` | 任务启动：类型判类（迭代/大任务/小任务/修 bug/继续任务）与开分支、worktree 决策清单 |
+| `yx-task-wrapup` | 任务收尾：正常完成/中止不合入/迭代收尾清单，文档同步检查与分支、worktree 清理 |
+| `yx-release` | 发版流程：semver 版本决策、发版记录迁移（unreleased → 版本文件）、tag 与渠道发布 |
 
 各 skill 互相按任务显式协作（改契约加载 yx-api-design、改模型加载 yx-database-design），不自动依赖。
 
