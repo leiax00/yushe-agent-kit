@@ -21,9 +21,7 @@ yushe-agent-kit/
 └── .agents/
     ├── rules/              # 协作规则源（机制注入，见下节）
     ├── notes/              # 决策记录（proposed/implemented/rejected）
-    ├── dsh/                # DSH 专属资源（plugins/yushe-user-rules：rules 注入机制）
     ├── skills/             # skill 源（单一事实来源）
-    └── (claude/ opencode/ … 其他工具专属目录随内容建立)
 ```
 
 `.agents/skills/` 是多个 agent CLI 正在收敛的项目级 skills 约定路径，本仓库本身就是一个合法的 agent 工作区——克隆即可被识别，无需先安装。文档体系遵循本 kit 的 `yx-docs` skill 约定（何时写、放哪里、怎么读写详见该 skill）。
@@ -38,7 +36,7 @@ yushe-agent-kit/
 | `git-workflow.md` | `alwaysApply: true`，每会话首步注入 | 简化 trunk-based 分支、`type(scope): 中文描述` 提交格式、提交/推送双授权安全边界 |
 | `docs-management.md` | `paths: **/*.md` 门控，首次读写 md 时注入 | 文档放置、单一权威定义、链接同步、写作风格 |
 
-**加载机制**：DSH 通过 `yushe-user-rules` 插件（`.agents/rules` 为最高优先级源）自动注入——插件源在本仓库 [`.agents/dsh/plugins/yushe-user-rules/`](.agents/dsh/plugins/yushe-user-rules/README.md)，安装方式见 [docs/usage/install.md](docs/usage/install.md)；Claude Code 原生支持 rules 目录；其余 CLI 由安装器映射。规则与 skills 的分工：**rules = 机制注入的强制约定，skills = 模型按任务加载的领域知识**。
+**加载机制**：DSH 通过 kit 整体插件的 rules 组件行注入（`.agents/rules` 为最高优先级源，包内默认规则兜底）；Claude Code 原生支持 rules 目录；其余 CLI 由安装器映射。规则与 skills 的分工：**rules = 机制注入的强制约定，skills = 模型按任务加载的领域知识**。
 
 ## Skills 一览
 

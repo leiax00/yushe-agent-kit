@@ -10,8 +10,7 @@
 
 | 载体 | 性质 | 加载方式 | 适合的内容 |
 |---|---|---|---|
-| `.agents/rules/*.md` | 强制约定 | **机制注入**（DSH 经 yushe-user-rules 插件；Claude Code 原生支持），可选 frontmatter 门控（`alwaysApply`/`paths`） | 每会话必守的底线、按文件类型触发的强制规则 |
-| `.agents/dsh/plugins/<name>/` | DSH 插件 | `dsh plugin add link:<kit 内路径>` 安装，软链回源 | 宿主机制本身的实现（如 yushe-user-rules，rules 注入的提供者） |
+| `.agents/rules/*.md` | 强制约定 | **机制注入**（DSH 经 kit 整体插件的 rules 组件；Claude Code 原生支持），可选 frontmatter 门控（`alwaysApply`/`paths`） | 每会话必守的底线、按文件类型触发的强制规则 |
 | `.agents/skills/<name>/` | 领域知识 | **模型按任务加载**（SKILL.md 路由 + references 条件加载） | 触发条件在用户消息中可见的任务型知识 |
 
 判定标准：模型能否可靠判断"何时需要"——不能（新会话/压缩后）走机制注入，能（git 操作、文档读写、架构设计）走 skill。

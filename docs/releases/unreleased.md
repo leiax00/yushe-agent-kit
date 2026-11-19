@@ -2,11 +2,15 @@
 
 ## Added
 - yak CLI（`bin/yak.js`，零依赖）：`install <target>` / `list` / `update` / `doctor`；registry 为目标映射唯一权威，未核实目录约定的目标拒绝安装；软链优先复制兜底
-- `yushe-user-rules` 插件源入仓：`.agents/dsh/plugins/yushe-user-rules/`（v0.3.0），由 CLI 一并安装
-- 协作规则体系：`.agents/rules/`（交互原则、git 规范、文档底线），DSH 经 yushe-user-rules 插件机制注入
+- 协作规则体系：`.agents/rules/`（交互原则、git 规范、文档底线），DSH 经 kit 整体插件注入、Claude Code 原生机制注入
 - `yx-docs` skill：文档体系（分形布局、读写协议、决策记录、发版记录、何时写对照表）
 - skill 命名统一 `yx-` 前缀
+- `yx-task-kickoff` skill：任务启动流程（迭代/大任务/小任务/修 bug/继续任务 + 开分支与 worktree 操作流程）
+- kit 整体插件：包根 DSH 插件（`dsh plugin add` 一步装齐），skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入，两个组件行在 Plugin Manager 独立开关
 
 ## Changed
 - `docs-management` 规则瘦身为底线并指向 `yx-docs` skill
 - 文档结构重组为 usage/tech/standards/releases + glossary + AUTHORING（原 USAGE.md/AUTHORING.md 拆分迁移）
+- git 分支模型改为"任务分支沙箱"：门禁后移至合入前、允许 checkpoint 提交、同机并行用 worktree 隔离、提交授权分两级
+- 安装模型：DSH 收敛为整体插件单一通道（`install dsh` = 确保插件已装）；CLI 支持 `install <target> <path>` 项目级整体落位；Claude Code 用户级软链 + 项目级相对软链双模式
+- rules 注入引擎（scan/engine/render/frontmatter/glob）并入包内 `src/plugin/rules-engine/`，`yushe-user-rules` 独立插件退役（`.agents/dsh/` 目录移除）
