@@ -26,7 +26,7 @@
 
 ## 记录
 
-- 变化记录按服务拆分：`releases/<服务>/unreleased.md`，发版时迁入该服务自己的版本文件（布局权威在 yx-docs）。
+- 变化记录按服务拆分：`docs/services/<服务>/releases/unreleased.md`，发版时迁入该服务自己的版本文件（monorepo 布局权威在 yx-docs）。
 
 ## 边界
 
