@@ -26,5 +26,6 @@ description: 开始一个开发任务时的启动流程：判断任务类型（�
 - 分支命名、提交格式、推送授权由**宿主注入的 git 工作流规则**约束（kit 仓库为 `.agents/rules/git-workflow.md`，其他项目以该项目实际注入的规则为准；无注入规则时按[开分支与 worktree](references/branch-setup.md)的默认命名）。本 Skill 只引用不重定义。
 - 会话启动的恢复上下文、对齐理解由宿主注入的交互规则（kit 仓库为 `interaction.md`）约束。
 - note 的写作与生命周期规则以 **yx-docs skill 的「决策记录」参考**（`references/notes.md`）为权威定义，本 Skill 只约定"何时开、开在哪"；需要细则时加载 yx-docs，不依赖文件路径直达。
+- 任务结束（完成或中止）的收尾流程见 **yx-task-wrapup** skill；本 Skill 开出的分支由它收口。
 
 多类型任务（如迭代启动后立即做第一个大任务）取对应参考的并集。
