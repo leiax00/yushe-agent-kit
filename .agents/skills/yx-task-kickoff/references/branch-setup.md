@@ -1,6 +1,6 @@
 # 开分支与 worktree（通用操作流程）
 
-各类型任务开分支时的统一操作流程：收集 git 现场 → 一次性问全决策 → 创建 → 汇报。分支命名遵循目标仓库注入的 git 规则（本仓库为 `feat/`、`fix/`、`try/` 前缀）；无此类规则时用 `feature/`、`fix/` 等与 commit type 语义一致的前缀，英文小写 kebab-case，不超过 5 个词，有关联 issue 号附末尾。
+各类型任务开分支时的统一操作流程：收集 git 现场 → 一次性问全决策 → 创建 → 汇报。分支命名遵循目标项目注入的 git 规则（kit 仓库为 `feat/`、`fix/`、`try/` 前缀）；无注入规则时用 `feature/`、`fix/` 等与 commit type 语义一致的前缀，英文小写 kebab-case，不超过 5 个词，有关联 issue 号附末尾。
 
 ## 基本模型（vibe coding 场景）
 
