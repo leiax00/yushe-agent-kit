@@ -7,11 +7,11 @@
 发布后（未发布前用仓库直跑，见下节）：
 
 ```bash
-npx yushe-agent-kit install dsh        # 安装到 DSH
-npx yushe-agent-kit install claude     # 安装到 Claude Code
-npx yushe-agent-kit install --all      # 所有已核实目标
-npx yushe-agent-kit doctor             # 诊断：遮蔽、双源、失效软链、命名不一致
-npx yushe-agent-kit list               # 资源与映射清单
+npx @leiax00/yushe-agent-kit install dsh        # 安装到 DSH
+npx @leiax00/yushe-agent-kit install claude     # 安装到 Claude Code
+npx @leiax00/yushe-agent-kit install --all      # 所有已核实目标
+npx @leiax00/yushe-agent-kit doctor             # 诊断：遮蔽、双源、失效软链、命名不一致
+npx @leiax00/yushe-agent-kit list               # 资源与映射清单
 ```
 
 安装策略：skills 软链优先（更新源即生效），`--copy` 强制复制；实体目录（用户自有安装）判 conflict 不覆盖；rules 对 Claude Code 复制到项目 `.claude/rules/`（`update <target>` 刷新）。

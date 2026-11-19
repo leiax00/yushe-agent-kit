@@ -54,12 +54,12 @@ yushe-agent-kit/
 
 ## 安装
 
-推荐 yak CLI（发布后 `npx yushe-agent-kit install <target>`；当前可 `node bin/yak.js` 直跑）：
+推荐 yak CLI（发布后 `npx @leiax00/yushe-agent-kit install <target>`；开发期 `npm run dev -- <cmd>` 或 `npm run build && node dist/bin/yak.js <cmd>`）：
 
 ```bash
-npx yushe-agent-kit install dsh      # skills 软链 + rules 插件安装
-npx yushe-agent-kit install claude   # skills 软链 + rules 复制到项目 .claude/rules/
-npx yushe-agent-kit doctor           # 诊断遮蔽、双源、失效软链
+npx @leiax00/yushe-agent-kit install dsh      # skills 软链 + rules 插件安装
+npx @leiax00/yushe-agent-kit install claude   # skills 软链 + rules 复制到项目 .claude/rules/
+npx @leiax00/yushe-agent-kit doctor           # 诊断遮蔽、双源、失效软链
 ```
 
 详见 [docs/usage/install.md](docs/usage/install.md)；DSH 发现机制与排障见 [docs/usage/dsh-discovery.md](docs/usage/dsh-discovery.md)。未核实目录约定的目标（opencode/codex/gemini）CLI 会拒绝安装，核实后在 [src/cli/targets/registry.js](src/cli/targets/registry.js) 登记映射。

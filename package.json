@@ -1,5 +1,5 @@
 {
-  "name": "yushe-agent-kit",
+  "name": "@leiax00/yushe-agent-kit",
   "version": "0.1.0",
   "description": "One-command install of skills, rules & plugins for AI coding agents (DSH, Claude Code, ...)",
   "type": "module",
@@ -33,6 +33,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@lax-jxgm.leiax00.net:2222/leiax00/yushe-agent-kit.git"
+    "url": "https://github.com/leiax00/yushe-agent-kit.git"
   }
 }

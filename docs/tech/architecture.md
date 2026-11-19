@@ -48,7 +48,7 @@ docs/
 
 ## yak CLI（安装器）
 
-单包发布：根 `package.json`（bin: `yak` / `yushe-agent-kit`，TypeScript 源码 → `dist/` 产物分发，运行时依赖 commander），`.agents/` 载荷随包分发，`npx yushe-agent-kit install <target>` 安装到各工具。**依赖边界**：CLI 可用外部依赖；`.agents/dsh/plugins/*` 保持零依赖（link: 安装不装依赖，插件硬约束）。
+单包发布：根 `package.json`（bin: `yak` / `yushe-agent-kit`，TypeScript 源码 → `dist/` 产物分发，运行时依赖 commander），`.agents/` 载荷随包分发，`npx @leiax00/yushe-agent-kit install <target>` 安装到各工具。**依赖边界**：CLI 可用外部依赖；`.agents/dsh/plugins/*` 保持零依赖（link: 安装不装依赖，插件硬约束）。
 
 - `src/cli/targets/registry.js` 是"资源 → 目标路径"映射的**唯一权威**；未核实目录约定的目标拒绝安装。
 - 软链优先、复制兜底；实体目录判 conflict 不覆盖（保护用户自有安装）。
