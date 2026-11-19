@@ -8,10 +8,10 @@
   "exports": {
     ".": "./dist/plugin/index.js",
     "./skills": "./dist/plugin/skills-entry.js",
-    "./skills/locale/*.json": "./skills/locale/*.json",
+    "./skills/locale/*.json": "./src/plugin/skills/locale/*.json",
     "./rules": "./dist/plugin/rules-entry.js",
-    "./rules/locale/*.json": "./rules/locale/*.json",
-    "./locale/*.json": "./locale/*.json"
+    "./rules/locale/*.json": "./src/plugin/rules/locale/*.json",
+    "./locale/*.json": "./src/plugin/locale/*.json"
   },
   "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
   "bin": {
@@ -24,9 +24,9 @@
     ".agents/skills/",
     ".agents/rules/",
     "README.md",
-    "locale/",
-    "skills/locale/",
-    "rules/locale/"
+    "src/plugin/locale/",
+    "src/plugin/skills/locale/",
+    "src/plugin/rules/locale/"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
