@@ -57,8 +57,8 @@ yushe-agent-kit/
 推荐 yak CLI（发布后 `npx @leiax00/yushe-agent-kit install <target>`；开发期 `npm run dev -- <cmd>` 或 `npm run build && node dist/bin/yak.js <cmd>`）：
 
 ```bash
-npx @leiax00/yushe-agent-kit install dsh      # kit 全量落位项目 .agents/（DSH 直接读）+ rules 插件安装
-npx @leiax00/yushe-agent-kit install claude   # kit 全量落位项目 .agents/，.claude/{skills,rules} 软链指向 .agents/
+npx @leiax00/yushe-agent-kit install dsh      # 用户级：skills 软链 + rules 插件安装
+npx @leiax00/yushe-agent-kit install claude . # 项目级：kit 全量落位 .agents/，.claude/{skills,rules} 软链指向它
 npx @leiax00/yushe-agent-kit doctor           # 诊断遮蔽、双源、失效软链
 ```
 
