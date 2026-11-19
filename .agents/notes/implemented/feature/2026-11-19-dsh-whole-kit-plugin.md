@@ -27,6 +27,7 @@ kit 此前对 DSH 的安装要走 CLI：skills 软链到用户 skills 根 + 单�
 
 ## 后果与验证
 
-- 待发布验证：`dsh plugin add @leiax00/yushe-agent-kit` 真实安装路径（本机仅以假 ctx 冒烟：6 个 skill 候选、rank 600、get 内容正确、注入器挂载 agent/pre-step + tools/result）。
-- yushe-user-rules 与整体插件勿同开（项目规则双注入），文档已注明。
+- 已实测（2026-11-19，profile `web`，DSH 0.2.2-rc.3）：`remove` 后 `add link:` 完成依赖与 bundle 注册，`--dump-config` 出现组装行；profile 内 peer 警告均来自 `@linxin666/*` 系列（宿主注入型 peer，静态分析看不见，预期噪音），kit 零贡献。
+- 安装语义坑：`dsh plugin install` 不触发 bundle 注册；reconcile 只认"本次新增依赖"，依赖已存在时 `add` 也不补注册，需先 remove 再 add（已写入 install.md）。
+- yushe-user-rules 与整体插件勿同开（项目规则双注入）；文档已注明，web profile 已移除 yushe-user-rules。
 - 后续若出 Claude 市场插件等第二制品，再评估 workspace 化。
