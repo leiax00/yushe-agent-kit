@@ -32,6 +32,11 @@ export function version(): string {
   return JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')).version as string
 }
 
+/** Published package name of this kit, for plugin-presence detection. */
+export function pkgName(): string {
+  return JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')).name as string
+}
+
 /** SKILL.md frontmatter name of a skill dir, for name/dir consistency checks. */
 export function skillEntryName(skillDir: string): string | undefined {
   const file = join(paths.skills, skillDir, 'SKILL.md')

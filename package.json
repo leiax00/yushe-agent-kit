@@ -4,12 +4,15 @@
   "description": "One-command install of skills, rules & plugins for AI coding agents (DSH, Claude Code, ...)",
   "type": "module",
   "license": "MIT",
+  "main": "./dist/plugin/index.js",
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
   "bin": {
     "yushe-agent-kit": "dist/bin/yak.js",
     "yak": "dist/bin/yak.js"
   },
   "files": [
     "dist/",
+    "cordis.patch.yml",
     ".agents/skills/",
     ".agents/rules/",
     ".agents/dsh/",

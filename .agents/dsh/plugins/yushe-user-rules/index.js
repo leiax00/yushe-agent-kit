@@ -353,7 +353,7 @@ function parseRuleFile(root, path, raw, warn) {
 }
 
 /** Discover and parse every rule file for one project. @returns parsed rules. */
-async function scanRules(cwd, signal, warn) {
+export async function scanRules(cwd, signal, warn) {
   let root
   try {
     root = await findProjectRoot(cwd)
@@ -391,6 +391,37 @@ async function scanRules(cwd, signal, warn) {
     if (rule !== undefined) rules.push(rule)
   }
   return { root, rules }
+}
+
+/**
+ * Discover and parse rule files under one explicit directory (no project-root
+ * walk). Used by embedders that keep rules outside the project, such as the
+ * kit package's own `.agents/rules`. @returns parsed rules.
+ */
+export async function scanRulesDir(dir, signal, warn) {
+  const files = []
+  try {
+    await collectRuleFiles(dir, files)
+  } catch (error) {
+    warn(`yushe-user-rules: failed to scan ${dir}: ${String(error)}`)
+    return []
+  }
+  files.sort()
+  const rules = []
+  for (const path of files) {
+    let raw
+    try {
+      raw = await readFile(path, { encoding: 'utf8', signal })
+    } catch (error) {
+      if (isAbortError(error, signal)) return rules
+      warn(`yushe-user-rules: failed to read ${path}: ${String(error)}`)
+      continue
+    }
+    if (Buffer.byteLength(raw, 'utf8') > MAX_FILE_BYTES) continue
+    const rule = parseRuleFile(dir, path, raw, warn)
+    if (rule !== undefined) rules.push(rule)
+  }
+  return rules
 }
 
 function escapeFrameClose(text) {
@@ -432,7 +463,7 @@ function renderBatch(due) {
 }
 
 /** Rule paths already carried by this session's visible history. */
-async function suppliedFromHistory(session, warn) {
+async function suppliedFromHistory(session, warn, kind, legacyKind) {
   try {
     const derived = session.deriveMessages()
     const list = derived instanceof Promise ? await derived : derived
@@ -440,7 +471,7 @@ async function suppliedFromHistory(session, warn) {
     if (Array.isArray(list)) {
       for (const message of list) {
         const source = message?.source
-        if (message?.role === 'user' && (source?.kind === SOURCE_KIND || source?.kind === LEGACY_SOURCE_KIND)
+        if (message?.role === 'user' && (source?.kind === kind || (legacyKind !== undefined && source?.kind === legacyKind))
           && Array.isArray(source.rules)) {
           for (const path of source.rules) {
             if (typeof path === 'string') supplied.add(path)
@@ -466,10 +497,12 @@ function filePathFromExecution(exec) {
 }
 
 /**
- * Register baseline and path-gated rules injection. Rules are supplied at
- * most once per session; edits mid-session apply to the next session.
+ * Stateful rules injection shared by this plugin and embedders (the kit
+ * package plugin). `loadRules(cwd, signal, warn)` resolves the rules visible
+ * from a session cwd; each rule injects at most once per session, and
+ * `paths`-gated rules wait for a matching file touch.
  */
-export function apply(ctx) {
+export function makeRuleInjector(ctx, { sourceKind = SOURCE_KIND, legacySourceKind, loadRules = scanRules } = {}) {
   const warn = message => ctx.logger?.warn(message)
   const sessions = new WeakMap()
 
@@ -478,7 +511,6 @@ export function apply(ctx) {
     if (state === undefined) {
       state = {
         cwd: session.header?.cwd ?? process.cwd(),
-        root: undefined,
         rules: undefined,
         historyScanned: false,
         supplied: new Set(),
@@ -491,7 +523,7 @@ export function apply(ctx) {
 
   const ensureRules = async (state, signal) => {
     if (state.rules === undefined) {
-      const { root, rules } = await scanRules(state.cwd, signal, warn)
+      const { root, rules } = await loadRules(state.cwd, signal, warn)
       state.root = root
       state.rules = rules
     }
@@ -526,7 +558,7 @@ export function apply(ctx) {
     if (session === undefined) return decision
     const state = stateOf(session)
     if (!state.historyScanned) {
-      state.supplied = await suppliedFromHistory(session, warn)
+      state.supplied = await suppliedFromHistory(session, warn, sourceKind, legacySourceKind)
       state.historyScanned = true
     }
     const rules = await ensureRules(state, signal)
@@ -550,7 +582,7 @@ export function apply(ctx) {
       id: randomUUID(),
       role: 'user',
       content: Object.freeze([{ type: 'text', text: batch.text }]),
-      source: Object.freeze({ kind: SOURCE_KIND, rules: Object.freeze([...batch.included]) }),
+      source: Object.freeze({ kind: sourceKind, rules: Object.freeze([...batch.included]) }),
     })
     // Splice after the last claimed message so the direct prompt prefix stays
     // stable for KV caching.
@@ -558,4 +590,13 @@ export function apply(ctx) {
     const at = last >= 0 ? last + 1 : decision.messages.length
     return { ...decision, messages: decision.messages.toSpliced(at, 0, desired) }
   })
+}
+
+/**
+ * Register baseline and path-gated project rules injection. Rules are
+ * supplied at most once per session; edits mid-session apply to the next
+ * session.
+ */
+export function apply(ctx) {
+  makeRuleInjector(ctx, { sourceKind: SOURCE_KIND, legacySourceKind: LEGACY_SOURCE_KIND, loadRules: scanRules })
 }
