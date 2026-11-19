@@ -24,7 +24,7 @@ program.command('install')
   .argument('<target...>', '目标工具（dsh/claude/…）', parseTargets, [])
   .option('--all', '安装全部已核实目标')
   .option('--copy', '强制复制而非软链')
-  .option('--project <dir>', '项目级安装（rules 落到该项目；默认当前目录）')
+  .option('--project <dir>', '目标项目目录（kit 全量落位到该项目 .agents/；默认当前目录）')
   .option('--profile <name>', 'DSH 插件安装目标 profile')
   .option('--no-plugin', '跳过 DSH 插件安装')
   .action(async (targetList: string[], opts: InstallOptions & { all?: boolean }) => {

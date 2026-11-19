@@ -14,7 +14,7 @@ npx @leiax00/yushe-agent-kit doctor             # 诊断：遮蔽、双源、失
 npx @leiax00/yushe-agent-kit list               # 资源与映射清单
 ```
 
-安装策略：skills 软链优先（更新源即生效），`--copy` 强制复制；实体目录（用户自有安装）判 conflict 不覆盖；rules 对 Claude Code 复制到项目 `.claude/rules/`（`update <target>` 刷新）。
+安装模型：kit **按整体安装**到目标项目 `.agents/`（skills、rules 全量复制，随项目 git 走、团队同版本）；各工具目录由映射产生——Claude Code 在项目 `.claude/skills/`、`.claude/rules/` 建相对软链指向 `.agents/` 对应内容（项目可整体移动），DSH 直接读项目 `.agents/skills/` 与 `.agents/rules/`。工具目录下的实体文件/目录（用户自有内容）判 conflict 不覆盖；`--copy` 强制用复制替代软链；重复 install 幂等（stage 刷新、链接 kept）。skill 间的相对路径引用依赖全套 skill 在位，不提供部分安装。
 
 ## 开发期（仓库直跑）
 
