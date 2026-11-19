@@ -4,12 +4,13 @@
 
 ## 仓库定位
 
-这是智能体脚手架资源的**单一事实来源**：skills、commands、rules、hooks 全部在 `.agents/` 下维护一份；各 CLI 工具（Claude Code、Codex、OpenCode、DSH 等）的目录只能由源映射产生，禁止在目标侧直接修改后回漏。
+这是智能体脚手架资源的**单一事实来源**：skills、rules、各工具专属的 plugins/commands/hooks 全部在 `.agents/` 下维护一份（通用资源在顶层，工具专属资源在 `.agents/<target>/`）；各 CLI 工具的目录只能由源映射产生，禁止在目标侧直接修改后回漏。
 
 ## 目录与归属
 
 - `.agents/skills/<name>/SKILL.md` — skill 入口，纯路由：适用范围、按任务加载的参考表、跨 skill 协作关系；不堆正文。
 - `.agents/rules/*.md` — 协作规则（Claude Code rules 语义，可选 YAML frontmatter 门控：`alwaysApply`/`paths`）：由宿主机制注入、不依赖模型判断的强制约定；与 skills 的分工是"rules 机制注入、skills 模型按任务加载"。
+- `.agents/<target>/` — 各 CLI 工具的专属资源（`dsh/`、`claude/`、`opencode/` …，随内容建立）：凡依赖特定工具机制的进对应 target 目录（如 `.agents/dsh/plugins/yushe-user-rules`，rules 注入机制的提供者）；工具无关的留在顶层 `rules/`、`skills/`。安装器按 target 目录映射到各工具。
 - `docs/` — 本仓库自身文档（单服务形态，遵循 `yx-docs` 布局）：`usage/`、`tech/`、`standards/`、`releases/`、`glossary.md`、`AUTHORING.md`。
 - `.agents/notes/` — 决策记录（`{生命周期}/{class}/yyyy-mm-dd-主题.md`，规范见 `yx-docs` skill 的 notes 参考）。
 - `.agents/skills/<name>/references/` — 正文细则，按主题拆文件；每行路由条目只对应一个主题。
@@ -33,6 +34,6 @@
 - 每次改动遵循 `.agents/rules/git-workflow.md` 的提交信息格式；不混合多个主题的重构。
 - skill 内容的取舍争议（如规则强度）优先依据既有文档的声明（团队共识/SHOULD 语义），其次询问用户。
 
-## 安装映射（规划）
+## 安装映射
 
-安装器实现后，各工具的目标路径映射在此登记并保持与 README 一致；新增目标工具时先确认其实际目录约定，不凭印象写路径。
+唯一权威是 [src/cli/targets/registry.js](src/cli/targets/registry.js)（CLI 安装器读取它）；本节与其保持一致但不重复细节。当前已核实并支持：DSH（skills → 用户 skills 根软链；rules → 项目 `.agents/rules/` 经插件注入；插件 → `dsh plugin add link:`）、Claude Code（skills → `~/.claude/skills/`；rules → 项目 `.claude/rules/`）。新增目标工具时先核实其实际目录约定再在 registry 登记，不凭印象写路径。

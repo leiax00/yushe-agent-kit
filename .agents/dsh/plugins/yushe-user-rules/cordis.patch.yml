@@ -1,0 +1,5 @@
+# Bundle layer for yushe-user-rules. The row references the package by name
+# so Node resolution finds the installed (linked) code.
+- insert:
+    - id: yushe-user-rules
+      name: yushe-user-rules
