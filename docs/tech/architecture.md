@@ -23,7 +23,7 @@
 - `yx-api-design` / `yx-database-design`：契约与数据设计
 - `yx-docs`：文档体系（结构/读/写/记录，含本仓库文档结构的定义）
 - `yx-task-kickoff` / `yx-task-wrapup`：任务启动与收尾流程（类型/场景判类，成对使用）
-- `yx-release`：发版流程（版本决策、记录迁移、tag 与渠道发布；版本落位分技术栈参考 npm/Maven/Python/Go）
+- `yx-release`：发版流程（版本决策与策略判定、记录迁移、tag 与渠道发布；版本落位分技术栈参考 npm/Maven/Python/Go，另含服务部署型发版）
 
 设计约定（详见 [skill 编写规范](../standards/skill-authoring.md)）：入口纯路由 ≤100 行、references 一文件一主题、RFC 2119 强度、诚实标注成熟度。
 

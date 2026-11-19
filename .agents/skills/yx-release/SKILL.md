@@ -1,6 +1,6 @@
 ---
 name: yx-release
-description: 仓库发版流程：确定 semver 版本号、按技术栈落位版本（Node/npm、Java/Maven、Python、Go 各有参考）、迁移发版记录（unreleased → vx.y.z）、打 tag、按渠道发布。用于用户说"发版 / 发一个版本 / 发布 npm 包 / 发布 PyPI 包"或迭代收尾决定发版时加载；发版记录的写法与布局由 yx-docs 承载。
+description: 仓库发版流程：确定 semver 版本号、按技术栈落位版本（Node/npm、Java/Maven、Python、Go 各有参考）、迁移发版记录（unreleased → vx.y.z）、打 tag、按渠道发布（包管理器或服务部署流水线）。用于用户说"发版 / 发一个版本 / 发布 npm 包 / 发布 PyPI 包 / 发服务"或迭代收尾决定发版时加载；发版记录的写法与布局由 yx-docs 承载。
 ---
 
 # 发版
@@ -26,6 +26,8 @@ description: 仓库发版流程：确定 semver 版本号、按技术栈落位�
 | 含 `go.mod`（Go module） | [Go](references/go.md) | 无版本文件、tag 即版本、`/vN` 模块路径、多模块 tag 前缀 |
 
 多技术栈混合仓库（如 Maven＋npm）加载各自参考，版本事实来源与同步顺序先确认再动手。**仓库自身有发布流程规范时以其为准，优先级高于本 skill 参考**；未覆盖的工具（Gradle、Cargo 等）核实其实际约定后按同一模式补充参考文件，不放占位。
+
+发布形态与技术栈正交：仓库以**部署服务**为交付物（不发公共包，如微服务独立部署单仓）时，无论技术栈另加载[服务部署型发版](references/service-deploy.md)——版本线、tag 与渠道按服务维度特化，版本落位仍走上表技术栈参考。
 
 ## 通用边界
 
