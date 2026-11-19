@@ -62,6 +62,12 @@ npx @leiax00/yushe-agent-kit install claude . # 项目级：kit 全量落位 .ag
 npx @leiax00/yushe-agent-kit doctor           # 诊断遮蔽、双源、失效软链
 ```
 
+DSH 也可以一步装整体插件（skills + rules 一个包全包，与上面二选一）：
+
+```bash
+dsh plugin add @leiax00/yushe-agent-kit
+```
+
 详见 [docs/usage/install.md](docs/usage/install.md)；DSH 发现机制与排障见 [docs/usage/dsh-discovery.md](docs/usage/dsh-discovery.md)。未核实目录约定的目标（opencode/codex/gemini）CLI 会拒绝安装，核实后在 [src/cli/targets/registry.js](src/cli/targets/registry.js) 登记映射。
 
 ## 维护原则

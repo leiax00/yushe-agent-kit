@@ -8,19 +8,50 @@
  */
 import { join } from 'node:path'
 import { homedir } from 'node:os'
-import { existsSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
-import { listSkills, listDshPlugins, paths } from '../kit.js'
+import { listSkills, listDshPlugins, paths, pkgName } from '../kit.js'
 import { place, linkState } from '../fsx.js'
 import { projectRoot, stageKit } from './stage.js'
 import type { Installer, InstallOptions } from './types.js'
 
+function dshHome(): string {
+  return process.env.DSH_HOME ?? join(homedir(), '.dsh')
+}
+
 function userSkillsRoot(): string {
-  return join(process.env.DSH_HOME ?? join(homedir(), '.dsh'), 'skills')
+  return join(dshHome(), 'skills')
+}
+
+/** Profiles whose dependencies already include the whole-kit plugin package. */
+function kitPluginProfiles(): string[] {
+  const profilesRoot = join(dshHome(), 'profiles')
+  if (!existsSync(profilesRoot)) return []
+  const hits: string[] = []
+  for (const entry of readdirSync(profilesRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith('.')) continue
+    const manifest = join(profilesRoot, entry.name, 'package.json')
+    if (!existsSync(manifest)) continue
+    try {
+      const deps = JSON.parse(readFileSync(manifest, 'utf8'))?.dependencies
+      if (deps !== null && typeof deps === 'object' && pkgName() in deps) hits.push(entry.name)
+    } catch {
+      // An unreadable profile manifest is not an install blocker.
+    }
+  }
+  return hits
 }
 
 export const install: Installer['install'] = async (opts: InstallOptions) => {
   const lines: string[] = []
+
+  const pluginProfiles = kitPluginProfiles()
+  if (opts.project === undefined && pluginProfiles.length > 0) {
+    // Whole-kit plugin already serves skills (rank 600) and rules; linking
+    // user-level skills here would create the dual source ourselves.
+    lines.push(`plugin: 整体插件已装于 profile ${pluginProfiles.join(', ')}，skills + rules 已由插件提供，跳过用户级安装（二选一）`)
+    return lines
+  }
 
   if (opts.project === undefined) {
     const root = userSkillsRoot()
@@ -33,7 +64,7 @@ export const install: Installer['install'] = async (opts: InstallOptions) => {
   }
   lines.push('rules: 项目 .agents/rules/ 由 yushe-user-rules 插件注入（项目级安装已随 kit 落位）')
 
-  if (opts.plugin !== false) {
+  if (opts.plugin !== false && pluginProfiles.length === 0) {
     for (const plugin of listDshPlugins()) {
       lines.push(...installPlugin(join(paths.dshPlugins, plugin), opts))
     }
@@ -57,6 +88,14 @@ export const doctor: Installer['doctor'] = () => {
 
   // 用户级安装现场
   const userRoot = userSkillsRoot()
+  // Whole-kit plugin and user-level links both serve kit skills: dual source.
+  const pluginProfiles = kitPluginProfiles()
+  if (pluginProfiles.length > 0) {
+    const linked = listSkills().filter(s => linkState(join(userRoot, s)) !== 'absent')
+    if (linked.length > 0) {
+      lines.push(`WARN 整体插件（profile ${pluginProfiles.join(', ')}）与用户级 skills 软链双源：${linked.join(', ')}——插件 rank 600 会被用户级覆盖，建议删除用户级软链`)
+    }
+  }
   for (const skill of listSkills()) {
     const state = linkState(join(userRoot, skill))
     if (state === 'symlink-broken') lines.push(`FAIL 用户 skills 根/${skill} 软链失效`)
