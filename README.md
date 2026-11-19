@@ -60,7 +60,7 @@ npx @leiax00/yushe-agent-kit install claude . # 项目级：kit 全量落位 .ag
 npx @leiax00/yushe-agent-kit doctor           # 诊断遮蔽、双源、失效软链
 ```
 
-DSH 也可以一步装整体插件（skills + rules 一个包全包，与上面二选一）：
+DSH 也可以一步装整体插件（skills + rules 一个包全包，与上面二选一；Plugin Manager 中分别显示为 Yushe Agent Kit Skills 与 Yushe Agent Kit Rules）：
 
 ```bash
 dsh plugin add @leiax00/yushe-agent-kit

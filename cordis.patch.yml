@@ -4,12 +4,6 @@
 # without affecting the other.
 - insert:
     - id: yushe-agent-kit-skills
-      name: '@leiax00/yushe-agent-kit'
-      config:
-        registerSkills: true
-        registerRules: false
+      name: '@leiax00/yushe-agent-kit/skills'
     - id: yushe-agent-kit-rules
-      name: '@leiax00/yushe-agent-kit'
-      config:
-        registerSkills: false
-        registerRules: true
+      name: '@leiax00/yushe-agent-kit/rules'

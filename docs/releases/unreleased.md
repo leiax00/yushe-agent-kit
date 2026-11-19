@@ -6,7 +6,7 @@
 - `yx-docs` skill：文档体系（分形布局、读写协议、决策记录、发版记录、何时写对照表）
 - skill 命名统一 `yx-` 前缀
 - `yx-task-kickoff` skill：任务启动流程（迭代/大任务/小任务/修 bug/继续任务 + 开分支与 worktree 操作流程）
-- kit 整体插件：包根 DSH 插件（`dsh plugin add` 一步装齐），skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入，两个组件行在 Plugin Manager 独立开关
+- kit 整体插件：一个 npm 包通过两个子路径组件提供 DSH 插件，skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入；Plugin Manager 分别显示为 **Yushe Agent Kit Skills** 与 **Yushe Agent Kit Rules** 并独立开关
 
 ## Changed
 - `docs-management` 规则瘦身为底线并指向 `yx-docs` skill

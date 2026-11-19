@@ -21,7 +21,7 @@ dsh plugin add @leiax00/yushe-agent-kit    # 发布后；开发期 dsh plugin ad
 
 1. skills 以 provider 注册（rank 600），项目 `.agents/skills/`（200）与用户 `~/.dsh/skills`（400）的同名 skill 优先于它；
 2. rules 单次注入覆盖两层：项目规则根（`.agents` > `.claude` > `.opencode` > `.cursor`，先到先得）+ 包内 `.agents/rules/` 默认规则，同名文件项目侧胜出；
-3. 一个包装两个组件行：`yushe-agent-kit-skills` 与 `yushe-agent-kit-rules`，在 Plugin Manager 中各自独立开关；只要 rules 不要 skills = 关掉 skills 行。
+3. 一个包装两个组件行：`yushe-agent-kit-skills` 与 `yushe-agent-kit-rules`，分别显示为 **Yushe Agent Kit Skills** 与 **Yushe Agent Kit Rules**，在 Plugin Manager 中各自独立开关；只要 rules 不要 skills = 关掉 skills 行。
 
 注意事项：
 
