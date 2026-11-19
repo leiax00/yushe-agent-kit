@@ -42,7 +42,12 @@ dsh plugin add @leiax00/yushe-agent-kit    # 发布后；开发期 dsh plugin ad
 行为：
 
 1. skills 以 provider 注册（rank 600），项目 `.agents/skills/`（200）与用户 `~/.dsh/skills`（400）的同名 skill 优先于它；
-2. rules 单次注入覆盖两层：项目规则根（`.agents` > `.claude` > `.opencode` > `.cursor`，先到先得）+ 包内 `.agents/rules/` 默认规则，同名文件项目侧胜出；
+2. rules 单次注入覆盖两层：项目规则根（`.agents` > `.claude` > `.opencode` > `.cursor`，先到先得）+ 包内 `.agents/rules/` 默认规则，同名文件项目侧胜出。
+
+注意事项：
+
+1. 用 `add` 子命令，MUST NOT 用 `install` 或尾部跟路径参数——注册依赖 bundle 的 reconcile 只在"本次新增的依赖"上生效，依赖已存在时 `add` 也不会补注册，需先 `remove` 再 `add`；
+2. 注册后**新开会话**才装载（已开的会话保留启动时的插件状态）；关闭插件则 skills 与 rules 注入一并移除，新会话即失效；
 3. 与 yushe-user-rules 插件勿同开（项目规则会被注入两遍）；与 CLI 用户级安装二选一——CLI 检测到 profile 依赖里有本包时自动跳过，doctor 对既有双源告警。
 
 ## 未支持的目标
