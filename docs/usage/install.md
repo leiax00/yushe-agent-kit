@@ -1,13 +1,14 @@
 # 安装
 
-> 受众：使用本 kit 的开发者 ｜ 范围：把 kit 安装到各 agent CLI ｜ 最后核实：2026-11-19
+> 受众：使用本 kit 的开发者 ｜ 范围：把 kit 安装到各 agent CLI ｜ 最后核实：2026-11-20
 
-## 两条通道
+## 三条通道
 
 | 通道 | 命令 | 内容位置 | 适合 |
 |---|---|---|---|
 | DSH 整体插件 | `dsh plugin add @leiax00/yushe-agent-kit` | 包内（`dist/plugin` 读包内 `.agents/`） | DSH 用户一步装齐、随包升级 |
-| yak CLI | `npx @leiax00/yushe-agent-kit install <target>` | 按目标工具映射 | Claude Code、项目级落位 |
+| Claude Code 插件市场 | `claude plugin install yushe-agent-kit@yushe-agent-kit` | 插件副本（市场刷新随发版更新） | 只要 skills 的 Claude Code 用户 |
+| yak CLI | `npx @leiax00/yushe-agent-kit install <target>` | 按目标工具映射 | Claude Code（含 rules）、项目级落位 |
 
 DSH 侧**只有插件一条内容通道**：CLI 的 `install dsh` 也只是确保插件已装（见下）。
 
@@ -29,6 +30,24 @@ dsh plugin add @leiax00/yushe-agent-kit    # 发布后；开发期 dsh plugin ad
 2. 注册后**新开会话**才装载（已开的会话保留启动时的插件状态）；关闭组件行则对应能力移除，新会话即失效；
 3. 历史 `yushe-user-rules` 插件与 rules 组件行勿同开（项目规则会被注入两遍）；该插件已并入本包（`src/plugin/rules-engine/`），不再单独存在；
 4. 旧版 CLI 装过的用户级 skills 软链（`~/.dsh/skills/yx-*`）会覆盖插件同名 skill，doctor 会告警建议删除。
+
+## Claude Code：插件市场（仅 skills）
+
+本仓库自身即一个单插件市场（`.claude-plugin/{marketplace,plugin}.json`，插件 source 为仓库根），GitHub 镜像匿名可克隆（2026-11-20 核实）：
+
+```bash
+claude plugin marketplace add leiax00/yushe-agent-kit
+claude plugin install yushe-agent-kit@yushe-agent-kit
+# 新版 Claude Code（≥ v2.1.292）可一步：claude plugin install yushe-agent-kit --marketplace leiax00/yushe-agent-kit
+```
+
+行为与边界：
+
+1. `plugin.json` 的 `skills` 指向包内 `.agents/skills/`，全套 8 个整体分发，不可拆分（skill 间相对路径引用依赖全套在位）；
+2. **rules 不走此通道**：Claude Code 插件组件没有 rules 形态，需要 rules 时用 yak CLI（用户级 `install claude` 或项目级 `install claude .`）；
+3. 与 yak CLI 的 skills 通道**二选一**：同开 = 同名 skill 双源（插件副本 + `~/.claude/skills/` 软链并存），doctor 只诊断 yak 侧现场；
+4. 更新：`claude plugin marketplace update yushe-agent-kit` 刷新市场目录，`claude plugin update yushe-agent-kit` 更新插件；本仓库发版时同步 bump `.claude-plugin/plugin.json` 的 `version`（Claude Code 以该字段变化判定用户侧更新，漏 bump 用户停在旧版）；
+5. 本机无 claude CLI，`claude plugin validate` 未实跑；两份清单已按 2026-11-20 官方 marketplace/manifest 参考核对，`marketplace.json` 另通过 schemastore 官方 JSON Schema 本地校验。
 
 ## yak CLI
 

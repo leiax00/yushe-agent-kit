@@ -59,3 +59,5 @@ docs/
 ## 安装映射
 
 映射唯一权威是 [src/cli/targets/registry.js](../../src/cli/targets/registry.js)；已支持 DSH 与 Claude Code，其余目标核实目录约定后登记。
+
+Claude Code 另有不经 CLI 的**插件市场通道**：本仓库即单插件市场（`.claude-plugin/`，插件 source 为仓库根、`skills` 指向 `.agents/skills/`），仅分发 skills——插件组件没有 rules 形态，rules 只能走 CLI 映射；两条 skills 通道二选一（双装即双源）。

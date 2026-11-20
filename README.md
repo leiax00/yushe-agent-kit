@@ -11,6 +11,7 @@ yushe-agent-kit/
 ├── README.md / AGENTS.md   # 入口路由 / 维护约定
 ├── package.json / bin/     # yak CLI（单包发布，资源即载荷）
 ├── src/cli/                # CLI 实现（targets/registry.js 为映射唯一权威）
+├── .claude-plugin/         # Claude Code 插件市场清单（本仓库即单插件市场，仅分发 skills）
 ├── docs/                   # 本仓库文档（yx-docs 单服务形态）
 │   ├── usage/              #   安装、DSH 发现机制
 │   ├── tech/               #   架构综述（资源模型、rules/skills 分工）
@@ -67,6 +68,13 @@ DSH 也可以一步装整体插件（skills + rules 一个包全包，与上面�
 
 ```bash
 dsh plugin add @leiax00/yushe-agent-kit
+```
+
+Claude Code 还可以直接从插件市场装 skills（本仓库即单插件市场；rules 不随插件分发，仍走 yak CLI，与 yak 的 skills 通道二选一）：
+
+```bash
+claude plugin marketplace add leiax00/yushe-agent-kit
+claude plugin install yushe-agent-kit@yushe-agent-kit
 ```
 
 详见 [docs/usage/install.md](docs/usage/install.md)；DSH 发现机制与排障见 [docs/usage/dsh-discovery.md](docs/usage/dsh-discovery.md)。未核实目录约定的目标（opencode/codex/gemini）CLI 会拒绝安装，核实后在 [src/cli/targets/registry.js](src/cli/targets/registry.js) 登记映射。

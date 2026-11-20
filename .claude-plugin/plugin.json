@@ -1,0 +1,15 @@
+{
+  "name": "yushe-agent-kit",
+  "displayName": "Yushe Agent Kit",
+  "version": "0.1.0",
+  "description": "面向中文工程团队的 agent skills：后端/前端架构、API 与数据库设计、文档体系、任务流程与发版（yx-* 全套 8 个）。仅分发 skills；rules 经 yak CLI 安装（npx @leiax00/yushe-agent-kit install claude）。",
+  "author": {
+    "name": "leiax00",
+    "url": "https://github.com/leiax00"
+  },
+  "homepage": "https://github.com/leiax00/yushe-agent-kit#readme",
+  "repository": "https://github.com/leiax00/yushe-agent-kit",
+  "license": "MIT",
+  "keywords": ["skills", "conventions", "engineering", "chinese", "coding-agent"],
+  "skills": ["./.agents/skills/"]
+}

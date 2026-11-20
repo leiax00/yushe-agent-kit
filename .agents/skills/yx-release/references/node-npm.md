@@ -15,6 +15,7 @@ npm version --no-git-tag-version X.Y.Z
 ```
 
 - **必须带 `--no-git-tag-version`**：npm 默认会自行 commit 并打 tag，抢在发布流程的提交与 tag 步骤之前制造不受控产物。
+- 仓库带 Claude Code 插件清单（`.claude-plugin/plugin.json`）时 MUST 同步其 `version`：插件市场以该字段变化判定用户侧更新，漏同步会把用户钉在旧版。
 - `package-lock.json` 顶层版本随命令联动更新，一并提交；pnpm-lock.yaml 不含自身版本号，无需同步。
 - monorepo 逐包执行，或用仓库既有编排工具统一管理。
 - 仓库已采用 **changesets**（存在 `.changeset/` 目录）时 MUST 走 `changeset version`，由它消费变更集、改版本并生成 CHANGELOG，不手改。

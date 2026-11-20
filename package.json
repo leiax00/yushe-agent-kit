@@ -21,6 +21,7 @@
   "files": [
     "dist/",
     "cordis.patch.yml",
+    ".claude-plugin/",
     ".agents/skills/",
     ".agents/rules/",
     "README.md",

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "yushe-agent-kit",
+  "owner": {
+    "name": "leiax00",
+    "url": "https://github.com/leiax00"
+  },
+  "plugins": [
+    {
+      "name": "yushe-agent-kit",
+      "source": "./",
+      "description": "面向中文工程团队的 agent skills：后端/前端架构、API 与数据库设计、文档体系、任务流程与发版（yx-* 全套 8 个）。仅分发 skills；rules 经 yak CLI 安装。"
+    }
+  ]
+}

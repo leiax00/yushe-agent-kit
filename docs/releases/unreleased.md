@@ -9,6 +9,7 @@
 - `yx-task-wrapup` skill：任务收尾流程（正常完成/中止不合入/迭代收尾 + 分支与 worktree 清理，含文档同步检查清单）
 - `yx-release` skill：发版流程（semver 版本决策与版本策略判定、发版记录迁移、tag 与渠道发布；版本落位分技术栈参考 npm/Maven/Python/Go，发布形态覆盖发库与微服务服务级部署）
 - kit 整体插件：一个 npm 包通过两个子路径组件提供 DSH 插件，skills provider（rank 600，项目/用户级同名可覆盖）+ 双层 rules 注入；Plugin Manager 分别显示为 **Yushe Agent Kit Skills** 与 **Yushe Agent Kit Rules** 并独立开关
+- Claude Code 插件市场通道：本仓库即单插件市场（`.claude-plugin/{plugin,marketplace}.json`，`skills` 指向 `.agents/skills/`），`claude plugin install yushe-agent-kit@yushe-agent-kit` 一步装全套 skills；rules 不走该通道（插件组件无 rules 形态），仍由 yak CLI 提供；发版时同步 bump `plugin.json` 版本
 
 ## Changed
 - git-workflow 规则新增合入方式约定：单笔或少量简单提交快进合并（`--ff-only`），多提交且各提交有意义时保留 merge 节点；wrapup 收尾参考同步
